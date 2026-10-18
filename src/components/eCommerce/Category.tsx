@@ -9,7 +9,7 @@ const Category = ({ img, prefix, title }: IProps) => {
       <div className="w-32 h-32 sm:w-40 sm:h-40 bg-gray-50 rounded-full overflow-hidden shadow-sm border border-gray-100 group-hover:shadow-md group-hover:border-rose-200 group-hover:ring-4 group-hover:ring-rose-50 transition-all duration-300 flex items-center justify-center relative">
         <img
           src={img}
-          alt={title}
+          alt={prefix}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />
         <div className="absolute inset-0 bg-rose-600 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
