@@ -1,34 +1,49 @@
-const Product = () => {
+import type { TProduct } from "@customTypes/product";
+import { addToCart } from "@store/cart/cartSlice";
+import { useAppDispatch } from "@store/hooks";
+
+const Product = ({
+  id,
+  img,
+  title,
+  price,
+  cat_prefix,
+  description,
+}: TProduct) => {
+  const dispatch = useAppDispatch();
+  const HandleAddToCartClick = () => {
+    dispatch(addToCart(id));
+  };
   return (
-    <div className="group bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 overflow-hidden transition-all duration-300 flex flex-col justify-center px-5 py-3 m-3 hover:-translate-y-1 hover:border-rose-500 ">
+    <div className="group bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 overflow-hidden transition-all duration-300 flex flex-col justify-center px-3 py-3 m-3 hover:-translate-y-1 hover:border-rose-500 ">
       <div className="relative w-full h-64 bg-gray-50 overflow-hidden flex justify-center items-center">
         <img
-          src="https://miro.medium.com/v2/resize:fit:1400/format:webp/0*exJGDxNr2Axk5L4P"
-          alt="Product Title"
+          src={img}
+          alt={title}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 rounded-2xl"
         />
 
         <span className="absolute top-3 left-3 bg-rose-600 text-white text-xs font-bold px-2 py-1 rounded-md shadow-sm">
-          Sale
+          {cat_prefix}
         </span>
       </div>
 
-      <div className="p-5 flex flex-col grow">
-        <h4 className="text-lg font-bold text-gray-800 mb-1 truncate">
-          Wireless Headphones
+      <div className="p-2 flex flex-col grow">
+        <h4 className="text-sm font-bold text-gray-800 mb-2 truncate">
+          {title}
         </h4>
 
-        <p className="text-sm text-gray-500 mb-4 line-clamp-2">
-          High-quality noise-canceling wireless headphones with long battery
-          life.
-        </p>
+        <p className="text-sm text-gray-500 mb-4 line-clamp-2">{description}</p>
 
         <div className="mt-auto flex items-center justify-between">
           <span className="text-xl font-extrabold text-gray-900">
-            $99.<span className="text-sm text-gray-500">99</span>
+            $<span className="text-md text-gray-800">{price}</span>
           </span>
 
-          <button className="bg-gray-100 hover:bg-rose-600 text-gray-800 hover:text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors duration-300 flex items-center gap-2">
+          <button
+            className="bg-gray-100 hover:bg-rose-600 text-gray-800 hover:text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors duration-300 flex items-center gap-2"
+            onClick={HandleAddToCartClick}
+          >
             <svg
               className="w-4 h-4"
               fill="none"

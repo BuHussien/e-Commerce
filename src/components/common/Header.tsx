@@ -29,20 +29,20 @@ const Header = () => {
                 Ecom
               </span>
             </NavLink>
+            
+            {/* 2. Desktop Navigation */}
+            <nav className="hidden lg:flex space-x-8 mt-1 ml-6 border-l border-gray-200 pl-5 ">
+              <NavLink to="/" className={navLinkClass}>
+                Home
+              </NavLink>
+              <NavLink to="categories" className={navLinkClass}>
+                Categories
+              </NavLink>
+              <NavLink to="about-us" className={navLinkClass}>
+                About Us
+              </NavLink>
+            </nav>
           </div>
-
-          {/* 2. Desktop Navigation */}
-          <nav className="hidden lg:flex space-x-8 mt-1">
-            <NavLink to="/" className={navLinkClass}>
-              Home
-            </NavLink>
-            <NavLink to="categories" className={navLinkClass}>
-              Categories
-            </NavLink>
-            <NavLink to="about-us" className={navLinkClass}>
-              About Us
-            </NavLink>
-          </nav>
 
           {/* 3. Desktop Auth & Cart */}
           <div className="hidden lg:flex items-center space-x-6">

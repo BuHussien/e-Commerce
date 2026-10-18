@@ -25,18 +25,22 @@ export const AppRouter = () => {
               path: "categories",
               element: <Categories />,
             },
+            // {
+            //   path: "products/:prefix",
+            //   element: <Products />,
+            //   loader: ({ params }) => {
+            //     if (typeof params.prefix !== "string" || !/^[a-z]+$/i.test(params.prefix)) {
+            //       throw new Response("Bad Request", {
+            //         statusText: "Category Not Exist",
+            //         status: 400,
+            //       });
+            //     }
+            //     return true;
+            //   },
+            // },
             {
-              path: "products/:prefix",
+              path: "products",
               element: <Products />,
-              loader: ({ params }) => {
-                if (typeof params.prefix !== "string" || !/^[a-z]+$/i.test(params.prefix)) {
-                  throw new Response("Bad Request", {
-                    statusText: "Category Not Exist",
-                    status: 400,
-                  });
-                }
-                return true;
-              },
             },
             {
               path: "about-us",
