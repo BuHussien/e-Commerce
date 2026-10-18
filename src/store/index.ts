@@ -1,17 +1,34 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from "redux-persist";
 import categories from "@store/categories/categoriesSlice";
 import products from "@store/products/productsSlice";
-import cart from "./cart/cartSlice";
+import cart from "@store/cart/cartSlice";
+import storageModule from "redux-persist/lib/storage";
+import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
+const storage = (storageModule as any).default ?? storageModule;
 
-export const store = configureStore({
-  reducer: {
-    categories,
-    products,
-    cart
-  },
+const cartPersistConfig = {
+  key: "cart",
+  storage,
+  whitelist: ["items"],
+};
+const rootReducer = combineReducers({
+  categories,
+  products,
+  cart: persistReducer(cartPersistConfig, cart),
+});
+
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+      },
+    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-
-export default store;
+const persistor = persistStore(store);
+export { store, persistor };

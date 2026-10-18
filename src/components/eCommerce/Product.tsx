@@ -1,19 +1,22 @@
 import type { TProduct } from "@customTypes/product";
 import { addToCart } from "@store/cart/cartSlice";
 import { useAppDispatch } from "@store/hooks";
+import { useState } from "react";
 
-const Product = ({
-  id,
-  img,
-  title,
-  price,
-  cat_prefix,
-  description,
-}: TProduct) => {
+const Product = ({ id, img, title, price, cat_prefix, description }: TProduct) => {
   const dispatch = useAppDispatch();
-  const HandleAddToCartClick = () => {
-    dispatch(addToCart(id));
-  };
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  const handleAddToCartClick = () => {
+  if (isDisabled) return;
+
+  setIsDisabled(true);
+  dispatch(addToCart(id));
+
+  setTimeout(() => {
+    setIsDisabled(false);
+  }, 1000);
+};
   return (
     <div className="group bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 overflow-hidden transition-all duration-300 flex flex-col justify-center px-3 py-3 m-3 hover:-translate-y-1 hover:border-rose-500 ">
       <div className="relative w-full h-64 bg-gray-50 overflow-hidden flex justify-center items-center">
@@ -42,21 +45,23 @@ const Product = ({
 
           <button
             className="bg-gray-100 hover:bg-rose-600 text-gray-800 hover:text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors duration-300 flex items-center gap-2"
-            onClick={HandleAddToCartClick}
+            onClick={handleAddToCartClick}
+            disabled={isDisabled}
           >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 4v16m8-8H4"
-              ></path>
-            </svg>
+            {isDisabled ? 
+              <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="animate-spin">
+                <path d="M4.97498 12H7.89998" stroke="#000000" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M11.8 5V8" stroke="#000000" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M18.625 12H15.7" stroke="#000000" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M11.8 19V16" stroke="#000000" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M6.97374 16.95L9.04203 14.8287" stroke="#000000" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M6.97374 7.05001L9.04203 9.17133" stroke="#000000" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M16.6262 7.05001L14.5579 9.17133" stroke="#000000" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M16.6262 16.95L14.5579 14.8287" stroke="#000000" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              : <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path>
+            </svg>}
             Add
           </button>
         </div>
