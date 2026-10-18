@@ -4,6 +4,7 @@ import { actGetCategories } from "../store/categories/atc/getCategories";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Loading from "@components/feedback/Loading";
+import Heading from "@components/common/Heading";
 
 export const Categories = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +26,7 @@ export const Categories = () => {
           {/* Header */}
           <div className="mb-8 flex flex-col justify-between gap-3 sm:mb-10 sm:flex-row sm:items-end">
             <div>
-              <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-pink -600">
+              <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-pink-600">
                 Explore our collection
               </p>
 

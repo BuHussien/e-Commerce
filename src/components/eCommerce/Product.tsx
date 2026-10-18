@@ -50,14 +50,14 @@ const Product = ({ id, img, title, price, cat_prefix, description }: TProduct) =
           >
             {isDisabled ? 
               <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="animate-spin">
-                <path d="M4.97498 12H7.89998" stroke="#000000" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M11.8 5V8" stroke="#000000" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M18.625 12H15.7" stroke="#000000" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M11.8 19V16" stroke="#000000" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M6.97374 16.95L9.04203 14.8287" stroke="#000000" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M6.97374 7.05001L9.04203 9.17133" stroke="#000000" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M16.6262 7.05001L14.5579 9.17133" stroke="#000000" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M16.6262 16.95L14.5579 14.8287" stroke="#000000" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M4.97498 12H7.89998" stroke="#000000" strokeWidth="1.5" strokeLinecap="round"/>
+                <path d="M11.8 5V8" stroke="#000000" strokeWidth="1.5" strokeLinecap="round"/>
+                <path d="M18.625 12H15.7" stroke="#000000" strokeWidth="1.5" strokeLinecap="round"/>
+                <path d="M11.8 19V16" stroke="#000000" strokeWidth="1.5" strokeLinecap="round"/>
+                <path d="M6.97374 16.95L9.04203 14.8287" stroke="#000000" strokeWidth="1.5" strokeLinecap="round"/>
+                <path d="M6.97374 7.05001L9.04203 9.17133" stroke="#000000" strokeWidth="1.5" strokeLinecap="round"/>
+                <path d="M16.6262 7.05001L14.5579 9.17133" stroke="#000000" strokeWidth="1.5" strokeLinecap="round"/>
+                <path d="M16.6262 16.95L14.5579 14.8287" stroke="#000000" strokeWidth="1.5" strokeLinecap="round"/>
               </svg>
               : <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path>
