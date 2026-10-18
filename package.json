@@ -21,8 +21,7 @@
     "react-redux": "^9.3.0",
     "react-router-dom": "^7.18.4",
     "redux-persist": "^6.0.0",
-    "vite-plugin-svgr": "^5.2.0",
-    "vite-tsconfig-paths": "^6.1.1"
+    "vite-plugin-svgr": "^5.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",

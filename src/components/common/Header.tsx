@@ -24,9 +24,9 @@ const Header = () => {
               to="/"
               className="text-2xl font-extrabold text-gray-800 flex items-center gap-1 tracking-wider uppercase no-underline!"
             >
-              <span>Our</span>
+              <span>NOUR</span>
               <span className="bg-rose-600 text-white text-sm px-2 py-1 rounded-sm shadow-sm">
-                Ecom
+                LIGHT
               </span>
             </NavLink>
             
@@ -62,9 +62,11 @@ const Header = () => {
             </div>
 
             {/* CART */}
-            <div className="text-gray-700 hover:text-rose-600 transition-colors cursor-pointer">
+            <NavLink 
+              to="cart"
+              className="text-gray-700 hover:text-rose-600 transition-colors cursor-pointer">
               <HeaderBasket />
-            </div>
+            </NavLink>
           </div>
 
           {/* 4. Mobile Cart & Menu Toggle */}

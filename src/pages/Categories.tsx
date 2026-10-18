@@ -47,6 +47,7 @@ export const Categories = () => {
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4 lg:gap-6 xl:grid-cols-5">
             {records.map((record) => (
               <Link
+                key={record.id}
                 to={`/products?cat_prefix=${encodeURIComponent(record.prefix)}`}
               >
                 <Category {...record} />

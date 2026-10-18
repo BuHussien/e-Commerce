@@ -7,6 +7,7 @@ import { Login } from "@pages/Login";
 import { Register } from "@pages/Register";
 import MainLayout from "@layouts/MainLayout";
 import { Error } from "@pages/Error";
+import Cart from "@pages/Cart";
 
 export const AppRouter = () => {
   return (
@@ -25,19 +26,6 @@ export const AppRouter = () => {
               path: "categories",
               element: <Categories />,
             },
-            // {
-            //   path: "products/:prefix",
-            //   element: <Products />,
-            //   loader: ({ params }) => {
-            //     if (typeof params.prefix !== "string" || !/^[a-z]+$/i.test(params.prefix)) {
-            //       throw new Response("Bad Request", {
-            //         statusText: "Category Not Exist",
-            //         status: 400,
-            //       });
-            //     }
-            //     return true;
-            //   },
-            // },
             {
               path: "products",
               element: <Products />,
@@ -54,6 +42,10 @@ export const AppRouter = () => {
               path: "register",
               element: <Register />,
             },
+            {
+              path: "cart",
+              element: <Cart />
+            }
           ],
         },
       ])}
