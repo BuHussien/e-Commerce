@@ -1,18 +1,20 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import HeaderBasket from "@components/eCommerce/HeaderBasket";
+import "@styles/global.css"
+import React from "react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     isActive
-      ? "text-rose-600 font-bold transition-colors !no-underline"
-      : "text-gray-600 hover:text-rose-600 font-medium transition-colors !no-underline";
+      ? "text-rose-600 font-bold transition-colors !no-underline active"
+      : "text-gray-800! hover:text-rose-600 font-medium transition-colors !no-underline";
 
   const mobileNavLinkClass = ({ isActive }: { isActive: boolean }) =>
     isActive
-      ? "block px-3 py-2 text-base font-bold text-rose-600 bg-rose-50 rounded-md border-l-4 border-rose-600 !no-underline"
-      : "block px-3 py-2 text-base font-medium text-gray-600 hover:text-rose-600 hover:bg-gray-50 rounded-md transition-colors !no-underline";
+      ? "block px-3 py-2 text-base font-bold text-rose-600! bg-rose-50 rounded-md border-l-4 border-rose-600 !no-underline "
+      : "block px-3 py-2 text-base font-medium text-gray-800! hover:text-rose-600 hover:bg-gray-50 rounded-md transition-colors !no-underline";
 
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
@@ -22,17 +24,17 @@ const Header = () => {
           <div className="shrink-0 flex items-center">
             <NavLink
               to="/"
-              className="text-2xl font-extrabold text-gray-800 flex items-center gap-1 tracking-wider uppercase no-underline!"
+              className="text-2xl font-extrabold  flex items-center gap-1 tracking-wider uppercase no-underline!"
             >
-              <span>NOUR</span>
+              <span className="">NOOR</span>
               <span className="bg-rose-600 text-white text-sm px-2 py-1 rounded-sm shadow-sm">
-                LIGHT
+                STORE
               </span>
             </NavLink>
-            
+
             {/* 2. Desktop Navigation */}
-            <nav className="hidden lg:flex space-x-8 mt-1 ml-6 border-l border-gray-200 pl-5 ">
-              <NavLink to="/" className={navLinkClass}>
+            <nav className="hidden lg:flex space-x-8 mt-1 ml-6 border-l border-gray-200 pl-5">
+              <NavLink  to="/" className={navLinkClass}>
                 Home
               </NavLink>
               <NavLink to="categories" className={navLinkClass}>
@@ -49,7 +51,7 @@ const Header = () => {
             <div className="flex items-center space-x-6 border-r border-gray-200 pr-6">
               <NavLink
                 to="login"
-                className="text-gray-600 hover:text-rose-600 text-sm font-semibold transition-colors no-underline!"
+                className={navLinkClass}
               >
                 Login
               </NavLink>
@@ -62,9 +64,10 @@ const Header = () => {
             </div>
 
             {/* CART */}
-            <NavLink 
+            <NavLink
               to="cart"
-              className="text-gray-700 hover:text-rose-600 transition-colors cursor-pointer">
+              className={navLinkClass}
+            >
               <HeaderBasket />
             </NavLink>
           </div>
@@ -72,7 +75,12 @@ const Header = () => {
           {/* 4. Mobile Cart & Menu Toggle */}
           <div className="lg:hidden flex items-center space-x-5">
             <div className="text-gray-700 hover:text-rose-600 transition-colors">
-              <HeaderBasket />
+              <NavLink
+                to="cart"
+                className={navLinkClass}
+              >
+                <HeaderBasket />
+              </NavLink>
             </div>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -153,4 +161,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default React.memo(Header);
