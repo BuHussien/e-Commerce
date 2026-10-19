@@ -1,4 +1,6 @@
 import type { TProduct } from "@customTypes/product";
+import { changeQnt, removeFromCart } from "@store/cart/cartSlice";
+import { useDispatch } from "react-redux";
 
 interface IProps {
   product: TProduct;
@@ -6,6 +8,10 @@ interface IProps {
 }
 
 const CartItem = ({ product, qnt }: IProps) => {
+  const dispatch = useDispatch();
+  const handleQuantityChange = (amount: number) => {
+    dispatch(changeQnt({ id: product.id, amount: amount }));
+  };
   return (
     <article
       key={product.id}
@@ -35,6 +41,9 @@ const CartItem = ({ product, qnt }: IProps) => {
           <button
             type="button"
             className="mt-auto pt-2 text-xs font-medium text-gray-400 transition hover:text-rose-600"
+            onClick={() => {
+              dispatch(removeFromCart(product.id));
+            }}
           >
             Remove
           </button>
@@ -46,13 +55,21 @@ const CartItem = ({ product, qnt }: IProps) => {
         <span className="text-xs text-gray-400 sm:hidden">Quantity</span>
 
         <div className="flex h-9 items-center rounded-lg border border-gray-200">
-          <button type="button" className="w-8 text-gray-500">
+          <button
+            type="button"
+            className="w-8 text-gray-500"
+            onClick={() => handleQuantityChange(-1)}
+          >
             −
           </button>
           <span className="min-w-8 text-center text-sm font-semibold text-gray-900">
             {qnt}
           </span>
-          <button type="button" className="w-8 text-gray-500">
+          <button
+            type="button"
+            className="w-8 text-gray-500"
+            onClick={() => handleQuantityChange(1)}
+          >
             +
           </button>
         </div>
