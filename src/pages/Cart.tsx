@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import CartItem from "@components/eCommerce/CartItem";
 import CartSummary from "@components/eCommerce/CartSummary";
 import Loading from "@components/feedback/Loading";
+import { cleanCartProductsFullInfo } from "@store/cart/cartSlice";
 
 const Cart = () => {
   const dispatch = useAppDispatch();
@@ -14,6 +15,9 @@ const Cart = () => {
   );
   useEffect(() => {
     dispatch(getProductsFullInfo());
+    return () => {
+      dispatch(cleanCartProductsFullInfo());
+    };
   }, [dispatch]);
   const subtotal = productsFullInfo.reduce(
     (total, obj) => total + Number(obj.product.price) * obj.qnt,

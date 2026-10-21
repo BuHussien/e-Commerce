@@ -2,10 +2,7 @@ import Heading from "@components/common/Heading";
 import Product from "@components/eCommerce/Product";
 import Loading from "@components/feedback/Loading";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
-import {
-  actGetProductsByCategoryPrefix,
-  ProductsCleanUp,
-} from "@store/products/productsSlice";
+import { actGetProductsByCategoryPrefix, cleanUpProductsRecords } from "@store/products/productsSlice";
 import { actGetAllProducts } from "@store/products/act/getAllProducts";
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -26,7 +23,7 @@ export const Products = () => {
     }
     dispatch(actGetWishlists());
     return () => {
-      dispatch(ProductsCleanUp());
+      dispatch(cleanUpProductsRecords());
     };
   }, [dispatch, catPrefix]);
 

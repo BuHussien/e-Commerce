@@ -13,7 +13,7 @@ const Wishlist = () => {
 
   // this fetch all products which is performance issue ('FIX IT Later')
   const { records, loading, error } = useAppSelector((state) => state.products);
-  console.log(records);
+
 
   const wishlistItemsIds = useAppSelector((state) => state.wishlist.itemsIds);
 
