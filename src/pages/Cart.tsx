@@ -1,35 +1,20 @@
-import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "@store/hooks";
-import getProductsFullInfo from "@store/cart/getProductsFullInfo";
 import Heading from "@components/common/Heading";
 import { Link } from "react-router-dom";
 import CartItem from "@components/eCommerce/CartItem";
 import CartSummary from "@components/eCommerce/CartSummary";
 import Loading from "@components/feedback/Loading";
-import { cleanCartProductsFullInfo } from "@store/cart/cartSlice";
+import useCart from "@hooks/useCart";
 
 const Cart = () => {
-  const dispatch = useAppDispatch();
-  const { productsFullInfo, loading, error } = useAppSelector(
-    (state) => state.cart,
-  );
-  useEffect(() => {
-    dispatch(getProductsFullInfo());
-    return () => {
-      dispatch(cleanCartProductsFullInfo());
-    };
-  }, [dispatch]);
-  const subtotal = productsFullInfo.reduce(
-    (total, obj) => total + Number(obj.product.price) * obj.qnt,
-    0,
-  );
-  const shipping = subtotal > 0 ? 50 : 0;
-  const total = subtotal + shipping;
-  const totalQuantity = productsFullInfo.reduce(
-    (total, obj) => total + obj.qnt,
-    0,
-  );
-
+  const {
+    error,
+    loading,
+    productsFullInfo,
+    total,
+    totalQuantity,
+    shipping,
+    subtotal,
+  } = useCart();
   return (
     <Loading status={loading} error={error} skeletonFor="cart">
       {productsFullInfo.length === 0 ? (

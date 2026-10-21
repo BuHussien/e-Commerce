@@ -31,11 +31,11 @@ const Header = () => {
           <div className="shrink-0 flex items-center">
             <NavLink
               to="/"
-              className="text-2xl font-extrabold  flex items-center gap-1 tracking-wider uppercase no-underline!"
+              className="text-2xl font-extrabold  flex items-center gap-1 tracking-wider uppercase no-underline! brightness-110 opacity-90 transition duration-300 hover:opacity-100 hover:brightness-125"
             >
-              <span className="">NOOR</span>
+             <img src="/nono.png" alt="" width={70} height={70}/>
               <span className="bg-rose-600 text-white text-sm px-2 py-1 rounded-sm shadow-sm">
-                STORE
+                OOR
               </span>
             </NavLink>
 

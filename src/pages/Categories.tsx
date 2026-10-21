@@ -1,27 +1,10 @@
 import Category from "@components/eCommerce/Category";
-import { useAppDispatch, useAppSelector } from "@store/hooks";
-import { actGetCategories } from "../store/categories/atc/getCategories";
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Loading from "@components/feedback/Loading";
 import Heading from "@components/common/Heading";
-import { cleanUpCategoriesRecords } from "@store/categories/categoriesSlice";
+import useCategories from "@hooks/useCategories";
 export const Categories = () => {
-  const dispatch = useAppDispatch();
-
-  const { records, loading, error } = useAppSelector(
-    (state) => state.categories,
-  );
-
-  useEffect(() => {
-    if (!records.length) {
-      dispatch(actGetCategories());
-    }
-    return () => {
-      dispatch(cleanUpCategoriesRecords());
-    };
-  }, [dispatch]);
-
+  const { error, loading, records } = useCategories();
   return (
     <Loading error={error ?? null} status={loading} skeletonFor="categories">
       <main className="min-h-screen bg-gray-50/70">

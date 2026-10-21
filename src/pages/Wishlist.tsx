@@ -1,26 +1,10 @@
 import Heading from "@components/common/Heading";
 import Product from "@components/eCommerce/Product";
 import Loading from "@components/feedback/Loading";
-import { useAppDispatch, useAppSelector } from "@store/hooks";
-import actGetAllProducts from "@store/products/act/getAllProducts";
-import { useEffect } from "react";
+import useWishlist from "@hooks/useWishlist";
 
 const Wishlist = () => {
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(actGetAllProducts());
-  }, [dispatch]);
-
-  // this fetch all products which is performance issue ('FIX IT Later')
-  const { records, loading, error } = useAppSelector((state) => state.products);
-
-
-  const wishlistItemsIds = useAppSelector((state) => state.wishlist.itemsIds);
-
-  const wishlistProducts = records.filter((product) =>
-    wishlistItemsIds.includes(product.id),
-  );
-
+  const { error, loading, wishlistProducts } = useWishlist();
   return (
     <Loading status={loading} error={error ?? null} skeletonFor="products">
       <main className="min-h-screen bg-gray-50/70">

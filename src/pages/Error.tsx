@@ -10,9 +10,10 @@ export const Error = () => {
   if (isRouteErrorResponse(error)) {
     errorCode = String(error.status);
 
-    errorMessage = error.status === 404 ? "The page you're looking for doesn't exist or may have been moved."
-        : error.statusText ||
-          "An unexpected error occurred. Please try again.";
+    errorMessage =
+      error.status === 404
+        ? "The page you're looking for doesn't exist or may have been moved."
+        : error.statusText || "An unexpected error occurred. Please try again.";
   }
 
   return (
