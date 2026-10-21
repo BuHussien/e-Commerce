@@ -1,9 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "@services/axios-global";
-import axios from "axios";
+
 import type { RootState } from "..";
 import type { TProduct } from "@customTypes/product";
 import type { IFullProductCart } from "@customTypes/shared";
+import AxiosErrorHandler from "@utilities/AxiosErrorHandler";
 
 type TResponse = TProduct[];
 const actGetProductsFullInfo = createAsyncThunk< IFullProductCart[], void, { state: RootState; rejectValue: string }
@@ -23,9 +24,7 @@ const actGetProductsFullInfo = createAsyncThunk< IFullProductCart[], void, { sta
       qnt: cart.items[String(product.id)] ?? 0,
     }));
   } catch (error) {
-    if (axios.isAxiosError(error))
-      return rejectWithValue(error?.response?.data?.message || error.message);
-    else return rejectWithValue("an unexpected error");
+    return rejectWithValue(AxiosErrorHandler(error));
   }
 });
 

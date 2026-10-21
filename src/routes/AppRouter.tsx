@@ -1,14 +1,18 @@
+import { lazy } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Home } from "@pages/Home";
-import { Categories } from "@pages/Categories";
-import { Products } from "@pages/Products";
-import { AboutUs } from "@pages/AboutUs";
-import { Login } from "@pages/Login";
-import { Register } from "@pages/Register";
+
 import MainLayout from "@layouts/MainLayout";
-import { Error } from "@pages/Error";
-import Cart from "@pages/Cart";
-import Wishlist from "@pages/Wishlist";
+const Home = lazy(() => import("@pages/Home").then(({ Home }) => ({ default: Home })));
+const Categories = lazy(() => import("@pages/Categories").then(({ Categories }) => ({default: Categories,})));
+const Products = lazy(() => import("@pages/Products").then(({ Products }) => ({default: Products,})));
+const AboutUs = lazy(() =>import("@pages/AboutUs").then(({ AboutUs }) => ({default: AboutUs})));
+const Login = lazy(() =>import("@pages/Login").then(({ Login }) => ({ default: Login })));
+const Register = lazy(() =>import("@pages/Register").then(({ Register }) => ({default: Register})));
+const Error = lazy(() =>import("@pages/Error").then(({ Error }) => ({ default: Error })));
+const Cart = lazy(() => import("@pages/Cart"));
+const Wishlist = lazy(() => import("@pages/Wishlist"))
+
+
 import { useAppDispatch } from "@store/hooks";
 import actGetWishlists from "@store/wishlist/act/getWishlist";
 import { useEffect } from "react";

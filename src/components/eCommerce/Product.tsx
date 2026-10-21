@@ -7,7 +7,7 @@ import FilledWishList from "@assets/svg/filledWishlist.svg?react";
 import { actLikeToggle } from "@store/wishlist/wishlistSlice";
 
 const Product = ({ id, img, title, price, cat_prefix, description, isLiked }: TProduct & { isLiked: boolean }) => {
-  console.log('Render');
+
   const dispatch = useAppDispatch();
   const [isDisabled, setIsDisabled] = useState(false);
 

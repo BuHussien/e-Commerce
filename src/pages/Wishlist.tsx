@@ -6,7 +6,7 @@ import useWishlist from "@hooks/useWishlist";
 const Wishlist = () => {
   const { error, loading, wishlistProducts } = useWishlist();
   return (
-    <Loading status={loading} error={error ?? null} skeletonFor="products">
+    <Loading status={loading} error={error ?? null} skeletonFor="wishlist">
       <main className="min-h-screen bg-gray-50/70">
         <section className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
           <Heading
