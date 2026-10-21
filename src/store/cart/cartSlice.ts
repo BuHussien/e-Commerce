@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getTotalCartQntSelector } from "./cartSelectors";
 import getProductsFullInfo from "./getProductsFullInfo";
-import type { IFullProductCart, TLoading } from "@customTypes/shared";
+import type { IFullProductCart } from "@customTypes/cart";
+import type { TLoading } from "@customTypes/shared";
 import actGetProductsFullInfo from "./getProductsFullInfo";
 interface ICartState {
   items: { [key: string]: number };

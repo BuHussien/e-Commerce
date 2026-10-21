@@ -3,7 +3,7 @@ import axiosInstance from "@services/axios-global";
 
 import type { RootState } from "..";
 import type { TProduct } from "@customTypes/product";
-import type { IFullProductCart } from "@customTypes/shared";
+import type { IFullProductCart } from "@customTypes/cart";
 import AxiosErrorHandler from "@utilities/AxiosErrorHandler";
 
 type TResponse = TProduct[];
