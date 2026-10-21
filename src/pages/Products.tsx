@@ -9,6 +9,7 @@ import {
 import { actGetAllProducts } from "@store/products/act/getAllProducts";
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import actGetWishlists from "@store/wishlist/act/getWishlist";
 
 export const Products = () => {
   const [searchParams] = useSearchParams();
@@ -23,11 +24,14 @@ export const Products = () => {
     } else {
       dispatch(actGetAllProducts());
     }
-
+    dispatch(actGetWishlists());
     return () => {
       dispatch(ProductsCleanUp());
     };
   }, [dispatch, catPrefix]);
+
+
+  const wishlistItemsIds = useAppSelector((state)=>state.wishlist.itemsIds);
 
   return (
     <Loading status={loading} error={error ?? null} skeletonFor="products">
@@ -39,10 +43,10 @@ export const Products = () => {
             description="Discover products you'll love from our collection."
             recordsLength={`${records.length} product`}
           ></Heading>
-          <div className="zoom-80">
+          <div className="zoom-90">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
               {records.map((record) => (
-                <Product key={record.id} {...record} />
+                <Product key={record.id} {...record} isLiked={wishlistItemsIds.includes(record.id)} />
               ))}
             </div>
           </div>

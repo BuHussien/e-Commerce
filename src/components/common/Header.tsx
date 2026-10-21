@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import HeaderBasket from "@components/eCommerce/HeaderBasket";
-import "@styles/global.css"
+import "@styles/global.css";
 import React from "react";
+import HeaderWishlist from "@components/eCommerce/HeaderWishlist";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -34,7 +35,7 @@ const Header = () => {
 
             {/* 2. Desktop Navigation */}
             <nav className="hidden lg:flex space-x-8 mt-1 ml-6 border-l border-gray-200 pl-5">
-              <NavLink  to="/" className={navLinkClass}>
+              <NavLink to="/" className={navLinkClass}>
                 Home
               </NavLink>
               <NavLink to="categories" className={navLinkClass}>
@@ -49,10 +50,11 @@ const Header = () => {
           {/* 3. Desktop Auth & Cart */}
           <div className="hidden lg:flex items-center space-x-6">
             <div className="flex items-center space-x-6 border-r border-gray-200 pr-6">
-              <NavLink
-                to="login"
-                className={navLinkClass}
-              >
+              {/* Wishlist */}
+              <NavLink to="wishlist" className={navLinkClass}>
+                <HeaderWishlist />
+              </NavLink>
+              <NavLink to="login" className={navLinkClass}>
                 Login
               </NavLink>
               <NavLink
@@ -64,21 +66,21 @@ const Header = () => {
             </div>
 
             {/* CART */}
-            <NavLink
-              to="cart"
-              className={navLinkClass}
-            >
+            <NavLink to="cart" className={navLinkClass}>
               <HeaderBasket />
             </NavLink>
           </div>
 
           {/* 4. Mobile Cart & Menu Toggle */}
           <div className="lg:hidden flex items-center space-x-5">
+            {/* Wishlist */}
             <div className="text-gray-700 hover:text-rose-600 transition-colors">
-              <NavLink
-                to="cart"
-                className={navLinkClass}
-              >
+              <NavLink to="wishlist" className={navLinkClass}>
+                <HeaderWishlist />
+              </NavLink>
+            </div>
+            <div className="text-gray-700 hover:text-rose-600 transition-colors">
+              <NavLink to="cart" className={navLinkClass}>
                 <HeaderBasket />
               </NavLink>
             </div>

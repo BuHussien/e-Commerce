@@ -83,7 +83,7 @@ const Cart = () => {
             </section>
 
             {/* Order Summary */}
-            <aside className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm sm:p-6 lg:sticky lg:top-6">
+            <aside className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm sm:p-6 lg:sticky lg:top-30">
               <CartSummary
                 shipping={shipping}
                 subtotal={subtotal}

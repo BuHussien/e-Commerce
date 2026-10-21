@@ -9,9 +9,7 @@ export const actGetAllProducts = createAsyncThunk(
     const { rejectWithValue } = thunkApi;
     try {
       const response = await axiosInstance.get<TProduct[]>("/products");
-      console.log(response.data);
-      console.log("Is Array:", Array.isArray(response.data));
-      console.log("Response:", response.data);
+
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error))
