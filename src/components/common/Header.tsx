@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import HeaderBasket from "@components/eCommerce/HeaderBasket";
 import "@styles/global.css";
 import React from "react";
-import HeaderWishlist from "@components/eCommerce/HeaderWishlist";
+import HeaderCounter from "@components/eCommerce/HeaderCounter";
+import { useAppSelector } from "@store/hooks";
+import { getTotalWishlistQntSelector } from "@store/wishlist/act/getWishlist";
+import WishlistSVG from "@assets/svg/headerWishlist.svg?react"
+import CartSVG from "@assets/svg/cart.svg?react"
 
 const Header = () => {
+  const wishlistQnt = useAppSelector(getTotalWishlistQntSelector);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     isActive
@@ -52,7 +56,7 @@ const Header = () => {
             <div className="flex items-center space-x-6 border-r border-gray-200 pr-6">
               {/* Wishlist */}
               <NavLink to="wishlist" className={navLinkClass}>
-                <HeaderWishlist />
+                <HeaderCounter svg={<WishlistSVG />} qnt={wishlistQnt} />
               </NavLink>
               <NavLink to="login" className={navLinkClass}>
                 Login
@@ -67,7 +71,7 @@ const Header = () => {
 
             {/* CART */}
             <NavLink to="cart" className={navLinkClass}>
-              <HeaderBasket />
+              <HeaderCounter svg={<CartSVG />} qnt={3} />
             </NavLink>
           </div>
 
@@ -76,12 +80,12 @@ const Header = () => {
             {/* Wishlist */}
             <div className="text-gray-700 hover:text-rose-600 transition-colors">
               <NavLink to="wishlist" className={navLinkClass}>
-                <HeaderWishlist />
+                <HeaderCounter svg={<WishlistSVG />} qnt={wishlistQnt} />
               </NavLink>
             </div>
             <div className="text-gray-700 hover:text-rose-600 transition-colors">
               <NavLink to="cart" className={navLinkClass}>
-                <HeaderBasket />
+                <HeaderCounter svg={<CartSVG />} qnt={wishlistQnt} />
               </NavLink>
             </div>
             <button

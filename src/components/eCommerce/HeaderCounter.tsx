@@ -1,12 +1,12 @@
-import HeaderWishlistComponent from "@assets/svg/headerWishlist.svg?react";
-import { useAppSelector } from "@store/hooks";
-import { useEffect, useState } from "react";
-import { getTotalWishlistQntSelector } from "@store/wishlist/act/getWishlist";
+import { useEffect, useState, type ReactNode } from "react";
 import "@styles/global.css";
-
-const HeaderWishlist = () => {
+interface IProps{
+    qnt: number;
+    svg: ReactNode;
+}
+const HeaderCounter = ({qnt,svg}: IProps) => {
   
-  const qnt = useAppSelector(getTotalWishlistQntSelector);
+//   const qnt = useAppSelector(getTotalWishlistQntSelector);
   const [pump, setPump] = useState(false);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const HeaderWishlist = () => {
   return (
     <div className="relative cursor-pointer transition-transform duration-200 hover:scale-110 flex items-center">
       <div>
-        <HeaderWishlistComponent/>
+        {svg}
       </div>
       <div
         key={qnt}
@@ -34,4 +34,4 @@ const HeaderWishlist = () => {
   );
 };
 
-export default HeaderWishlist;
+export default HeaderCounter;
