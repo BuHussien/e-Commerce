@@ -7,9 +7,11 @@ import { useAppSelector } from "@store/hooks";
 import { getTotalWishlistQntSelector } from "@store/wishlist/act/getWishlist";
 import WishlistSVG from "@assets/svg/headerWishlist.svg?react"
 import CartSVG from "@assets/svg/cart.svg?react"
+import { getTotalCartQntSelector } from "@store/cart/cartSelectors";
 
 const Header = () => {
   const wishlistQnt = useAppSelector(getTotalWishlistQntSelector);
+  const cartQnt = useAppSelector(getTotalCartQntSelector);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     isActive
@@ -71,7 +73,7 @@ const Header = () => {
 
             {/* CART */}
             <NavLink to="cart" className={navLinkClass}>
-              <HeaderCounter svg={<CartSVG />} qnt={3} />
+              <HeaderCounter svg={<CartSVG />} qnt={cartQnt} />
             </NavLink>
           </div>
 
@@ -85,7 +87,7 @@ const Header = () => {
             </div>
             <div className="text-gray-700 hover:text-rose-600 transition-colors">
               <NavLink to="cart" className={navLinkClass}>
-                <HeaderCounter svg={<CartSVG />} qnt={wishlistQnt} />
+                <HeaderCounter svg={<CartSVG />} qnt={cartQnt} />
               </NavLink>
             </div>
             <button

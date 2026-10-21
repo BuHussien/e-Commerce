@@ -10,9 +10,7 @@ export const AboutUs = () => {
 
           <h1 className="max-w-3xl text-4xl font-extrabold leading-tight md:text-6xl">
             More Than Shopping.
-            <span className="mt-2 block text-pink-200">
-              It's Your Style.
-            </span>
+            <span className="mt-2 block text-pink-200">It's Your Style.</span>
           </h1>
 
           <p className="mt-6 max-w-2xl text-base leading-7 text-white/85 md:text-lg">
@@ -28,6 +26,15 @@ export const AboutUs = () => {
             Explore Our Store
             <span aria-hidden="true">→</span>
           </a>
+          <aside className="absolute bottom-5 right-5">
+            <img
+              src="/nono.png"
+              width={250}
+              height={250}
+              alt="NOOR Logo"
+              className="brightness-110 opacity-90 transition duration-300 hover:opacity-100 hover:brightness-125"
+            />
+          </aside>
         </div>
 
         <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-pink-400/20 blur-3xl" />
@@ -53,8 +60,8 @@ export const AboutUs = () => {
           </p>
 
           <p className="mt-4 leading-7 text-gray-600">
-            From discovering something new to receiving an order, we're here
-            to make your shopping experience better at every step.
+            From discovering something new to receiving an order, we're here to
+            make your shopping experience better at every step.
           </p>
         </div>
 
@@ -100,12 +107,10 @@ export const AboutUs = () => {
               <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-2xl">
                 ✦
               </div>
-              <h3 className="text-xl font-bold text-blue-700">
-                Quality First
-              </h3>
+              <h3 className="text-xl font-bold text-blue-700">Quality First</h3>
               <p className="mt-3 leading-7 text-gray-600">
-                We aim to offer products that bring value and make everyday
-                life a little better.
+                We aim to offer products that bring value and make everyday life
+                a little better.
               </p>
             </article>
 
@@ -117,8 +122,8 @@ export const AboutUs = () => {
                 Customers Matter
               </h3>
               <p className="mt-3 leading-7 text-gray-600">
-                Your experience comes first. We want every step of your
-                shopping journey to feel easy and reliable.
+                Your experience comes first. We want every step of your shopping
+                journey to feel easy and reliable.
               </p>
             </article>
 
@@ -146,8 +151,8 @@ export const AboutUs = () => {
           </h2>
 
           <p className="mx-auto mt-4 max-w-xl leading-7 text-white/85">
-            Discover products picked with your everyday needs in mind.
-            Your next favorite find could be just one click away.
+            Discover products picked with your everyday needs in mind. Your next
+            favorite find could be just one click away.
           </p>
 
           <a

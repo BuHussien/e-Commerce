@@ -1,12 +1,13 @@
 import type { TProduct } from "@customTypes/product";
 import { addToCart } from "@store/cart/cartSlice";
 import { useAppDispatch } from "@store/hooks";
-import { useState } from "react";
+import { memo, useState } from "react";
 import WishList from "@assets/svg/wishlist.svg?react";
 import FilledWishList from "@assets/svg/filledWishlist.svg?react";
 import { actLikeToggle } from "@store/wishlist/wishlistSlice";
 
 const Product = ({ id, img, title, price, cat_prefix, description, isLiked }: TProduct & { isLiked: boolean }) => {
+  console.log('Render');
   const dispatch = useAppDispatch();
   const [isDisabled, setIsDisabled] = useState(false);
 
@@ -142,4 +143,4 @@ const Product = ({ id, img, title, price, cat_prefix, description, isLiked }: TP
   );
 };
 
-export default Product;
+export default memo(Product);
