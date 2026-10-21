@@ -16,19 +16,21 @@ const useProducts = () => {
   const { loading, error, records } = useAppSelector((state) => state.products);
 
   useEffect(() => {
+    let promise;
     if (catPrefix) {
-      dispatch(actGetProductsByCategoryPrefix(catPrefix));
+      promise = dispatch(actGetProductsByCategoryPrefix(catPrefix));
     } else {
-      dispatch(actGetAllProducts());
+      promise = dispatch(actGetAllProducts());
     }
     dispatch(actGetWishlists());
     return () => {
       dispatch(cleanUpProductsRecords());
+      promise.abort();
     };
   }, [dispatch, catPrefix]);
 
   const wishlistItemsIds = useAppSelector((state) => state.wishlist.itemsIds);
-  return {loading, error, records, catPrefix, wishlistItemsIds};
+  return { loading, error, records, catPrefix, wishlistItemsIds };
 };
 
 export default useProducts;

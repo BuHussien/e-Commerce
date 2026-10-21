@@ -6,9 +6,9 @@ import AxiosErrorHandler from "@utilities/AxiosErrorHandler";
 export const actGetCategories = createAsyncThunk(
   "Categories/getCategories",
   async (_, thunkApi) => {
-    const { rejectWithValue } = thunkApi;
+    const { rejectWithValue,signal } = thunkApi;
     try {
-      const response = await axiosInstance.get<TCategory[]>("/categories");
+      const response = await axiosInstance.get<TCategory[]>("/categories",{signal});
       return response.data;
     } catch (error) {
       return rejectWithValue(AxiosErrorHandler(error));

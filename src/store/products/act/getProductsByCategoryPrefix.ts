@@ -6,10 +6,10 @@ import AxiosErrorHandler from "@utilities/AxiosErrorHandler";
 export const actGetProductsByCategoryPrefix = createAsyncThunk(
   "products/actGetProductsByCategoryPrefix",
   async (prefix: string, thunkApi) => {
-    const { rejectWithValue } = thunkApi;
+    const { rejectWithValue, signal } = thunkApi;
     try {
       const response = await axiosInstance.get<TProduct[]>(
-        `/products?cat_prefix=${prefix}`,
+        `/products?cat_prefix=${prefix}`,{signal}
       );
       return response.data;
     } catch (error) {
