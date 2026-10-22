@@ -5,8 +5,8 @@ import React from "react";
 import HeaderCounter from "@components/eCommerce/HeaderCounter";
 import { useAppSelector } from "@store/hooks";
 import { getTotalWishlistQntSelector } from "@store/wishlist/act/getWishlist";
-import WishlistSVG from "@assets/svg/headerWishlist.svg?react"
-import CartSVG from "@assets/svg/cart.svg?react"
+import WishlistSVG from "@assets/svg/headerWishlist.svg?react";
+import CartSVG from "@assets/svg/cart.svg?react";
 import { getTotalCartQntSelector } from "@store/cart/cartSelectors";
 
 const Header = () => {
@@ -33,7 +33,7 @@ const Header = () => {
               to="/"
               className="text-2xl font-extrabold  flex items-center gap-1 tracking-wider uppercase no-underline! brightness-110 opacity-90 transition duration-300 hover:opacity-100 hover:brightness-125"
             >
-             <img src="/nono.png" alt="" width={70} height={70}/>
+              <img src="/nono.png" alt="" width={70} height={70} />
               <span className="bg-rose-600 text-white text-sm px-2 py-1 rounded-sm shadow-sm">
                 OOR
               </span>
@@ -49,6 +49,9 @@ const Header = () => {
               </NavLink>
               <NavLink to="about-us" className={navLinkClass}>
                 About Us
+              </NavLink>
+              <NavLink to="contact" className={navLinkClass}>
+                Contact Us
               </NavLink>
             </nav>
           </div>
@@ -145,6 +148,13 @@ const Header = () => {
               className={mobileNavLinkClass}
             >
               About Us
+            </NavLink>
+            <NavLink
+              to="contact"
+              onClick={() => setIsMenuOpen(false)}
+              className={mobileNavLinkClass}
+            >
+              Contact Us
             </NavLink>
           </div>
           <div className="px-4 pt-4 pb-6 border-t border-gray-100 flex flex-col space-y-3">

@@ -16,6 +16,7 @@ const Wishlist = lazy(() => import("@pages/Wishlist"))
 import { useAppDispatch } from "@store/hooks";
 import actGetWishlists from "@store/wishlist/act/getWishlist";
 import { useEffect } from "react";
+import Contact from "@pages/contact";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
       { path: "register", element: <Register /> },
       { path: "cart", element: <Cart /> },
       { path: "wishlist", element: <Wishlist /> },
+      {path: "contact", element: <Contact />},
     ],
   },
 ]);
