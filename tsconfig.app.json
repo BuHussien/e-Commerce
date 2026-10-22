@@ -30,7 +30,8 @@
       "@styles/*": ["src/styles/*"],
       "@layouts/*": ["src/layouts/*"],
       "@utilities/*": ["src/utilities/*"],
-      "@services/*": ["src/services/*"]
+      "@services/*": ["src/services/*"],
+      "@validation/*": ["src/validation/*"]
     },
     /* Linting */
     "noUnusedLocals": true,
