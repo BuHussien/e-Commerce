@@ -1,6 +1,7 @@
 import Heading from "@components/common/Heading";
 import Product from "@components/eCommerce/Product";
 import Loading from "@components/feedback/Loading";
+import LottieHandler from "@components/feedback/LottieHandler";
 import useProducts from "@hooks/useProducts";
 
 export const Products = () => {
@@ -8,27 +9,41 @@ export const Products = () => {
     useProducts();
   return (
     <Loading status={loading} error={error ?? null} skeletonFor="products">
-      <main className="min-h-screen bg-gray-50/70">
-        <section className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
-          <Heading
-            headTitle="Explore our collection"
-            Title={`${catPrefix ?? "All"} Products`}
-            description="Discover products you'll love from our collection."
-            recordsLength={`${records.length} product`}
-          ></Heading>
-          <div className="zoom-90">
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
-              {records.map((record) => (
-                <Product
-                  key={record.id}
-                  {...record}
-                  isLiked={wishlistItemsIds.includes(record.id)}
-                />
-              ))}
+      {records.length > 0 ? (
+        <main className="min-h-screen bg-gray-50/70">
+          <section className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+            <Heading
+              headTitle="Explore our collection"
+              Title={`${catPrefix ?? "All"} Products`}
+              description="Discover products you'll love from our collection."
+              recordsLength={`${records.length} product`}
+            ></Heading>
+            <div className="zoom-90">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
+                {records.map((record) => (
+                  <Product
+                    key={record.id}
+                    {...record}
+                    isLiked={wishlistItemsIds.includes(record.id)}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
-      </main>
+          </section>
+        </main>
+      ) : (
+        <main className="mx-auto flex min-h-[60vh] max-w-7xl flex-col items-center justify-center px-4 text-center">
+          <LottieHandler
+            type="empty"
+            message={
+              catPrefix
+                ? `No Products in ${catPrefix} category yet`
+                : "No Products Yet"
+            }
+            className="w-full"
+          />
+        </main>
+      )}
     </Loading>
   );
 };

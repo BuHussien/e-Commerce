@@ -1,6 +1,6 @@
 import { lazy } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
+import { Error } from "@pages/Error";
 import MainLayout from "@layouts/MainLayout";
 const Home = lazy(() => import("@pages/Home").then(({ Home }) => ({ default: Home })));
 const Categories = lazy(() => import("@pages/Categories").then(({ Categories }) => ({default: Categories,})));
@@ -8,7 +8,6 @@ const Products = lazy(() => import("@pages/Products").then(({ Products }) => ({d
 const AboutUs = lazy(() =>import("@pages/AboutUs").then(({ AboutUs }) => ({default: AboutUs})));
 const Login = lazy(() =>import("@pages/Login").then(({ Login }) => ({ default: Login })));
 const Register = lazy(() =>import("@pages/Register").then(({ Register }) => ({default: Register})));
-const Error = lazy(() =>import("@pages/Error").then(({ Error }) => ({ default: Error })));
 const Cart = lazy(() => import("@pages/Cart"));
 const Wishlist = lazy(() => import("@pages/Wishlist"))
 
@@ -17,6 +16,7 @@ import { useAppDispatch } from "@store/hooks";
 import actGetWishlists from "@store/wishlist/act/getWishlist";
 import { useEffect } from "react";
 import Contact from "@pages/contact";
+import PageSuspenseFallback from "@components/feedback/PageSuspenseFallback";
 
 const router = createBrowserRouter([
   {
@@ -25,14 +25,14 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     children: [
       { index: true, element: <Home /> },
-      { path: "categories", element: <Categories /> },
-      { path: "products", element: <Products /> },
-      { path: "about-us", element: <AboutUs /> },
-      { path: "login", element: <Login /> },
-      { path: "register", element: <Register /> },
-      { path: "cart", element: <Cart /> },
-      { path: "wishlist", element: <Wishlist /> },
-      {path: "contact", element: <Contact />},
+      { path: "categories", element: <PageSuspenseFallback> <Categories /> </PageSuspenseFallback>},
+      { path: "products", element: <PageSuspenseFallback> <Products /> </PageSuspenseFallback>},
+      { path: "about-us", element: <PageSuspenseFallback> <AboutUs /> </PageSuspenseFallback>},
+      { path: "login", element: <PageSuspenseFallback> <Login /> </PageSuspenseFallback>},
+      { path: "register", element: <PageSuspenseFallback> <Register /> </PageSuspenseFallback>},
+      { path: "cart", element: <PageSuspenseFallback> <Cart /> </PageSuspenseFallback>},
+      { path: "wishlist", element: <PageSuspenseFallback> <Wishlist /> </PageSuspenseFallback>},
+      {path: "contact", element: <PageSuspenseFallback> <Contact /> </PageSuspenseFallback>},
     ],
   },
 ]);

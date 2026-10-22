@@ -4,6 +4,7 @@ import CartItem from "@components/eCommerce/CartItem";
 import CartSummary from "@components/eCommerce/CartSummary";
 import Loading from "@components/feedback/Loading";
 import useCart from "@hooks/useCart";
+import LottieHandler from "@components/feedback/LottieHandler";
 
 const Cart = () => {
   const {
@@ -19,14 +20,10 @@ const Cart = () => {
     <Loading status={loading} error={error} skeletonFor="cart">
       {productsFullInfo.length === 0 ? (
         <main className="mx-auto flex min-h-[60vh] max-w-7xl flex-col items-center justify-center px-4 text-center">
-          <h2 className="text-2xl font-bold text-gray-900">
-            Your cart is empty
-          </h2>
-
-          <p className="mt-2 text-gray-500">
-            Looks like you haven't added anything yet.
-          </p>
-
+          <LottieHandler
+            type={"loading"}
+            message="Looks like you haven't added anything yet."
+          />
           <Link
             to="/products"
             className="mt-6 rounded-lg bg-rose-600 px-6 py-3 font-semibold text-white transition hover:bg-rose-700"
