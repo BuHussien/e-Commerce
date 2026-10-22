@@ -1,11 +1,11 @@
 interface IProps {
-    headTitle: string;
-    Title: string;
-    description: string;
-    recordsLength: string;
+  headTitle: string;
+  Title: string;
+  description?: string;
+  recordsLength?: string;
 }
 
-const Heading = ({headTitle, Title, description,recordsLength}: IProps) => {
+const Heading = ({ headTitle, Title, description, recordsLength }: IProps) => {
   return (
     <div className="mb-8 flex flex-col justify-between gap-3 sm:mb-10 sm:flex-row sm:items-end">
       <div>
@@ -17,14 +17,18 @@ const Heading = ({headTitle, Title, description,recordsLength}: IProps) => {
           {Title}
         </h1>
 
-        <p className="mt-3 max-w-xl text-sm leading-6 text-gray-500 sm:text-base">
-          {description}
-        </p>
+        {description && (
+          <p className="mt-3 max-w-xl text-sm leading-6 text-gray-500 sm:text-base">
+            {description}
+          </p>
+        )}
       </div>
 
-      <span className="w-fit rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600">
-        {recordsLength}
-      </span>
+      {recordsLength && (
+        <span className="w-fit rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600">
+          {recordsLength}
+        </span>
+      )}
     </div>
   );
 };
