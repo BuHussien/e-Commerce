@@ -1,46 +1,13 @@
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import Heading from "@components/common/Heading";
 import Input from "@components/forms/Input";
+import { useLogin } from "@hooks/useLogin";
 import { Alert, Form } from "react-bootstrap";
-import { Link, useSearchParams, useNavigate, Navigate } from "react-router-dom";
-import { signInScheema, type signInType } from "@validation/signInSchema";
-import type { TLoginForm } from "@customTypes/auth";
-import { useAppDispatch, useAppSelector } from "@store/hooks";
-import { actAuthLogin, resetUI } from "@store/auth/authSlice";
-import { useEffect } from "react";
-import actGetWishlists from "@store/wishlist/act/getWishlist";
+import { Link, Navigate } from "react-router-dom";
 
 export const Login = () => {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams("msg");
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<signInType>({ resolver: zodResolver(signInScheema) });
 
-  const { accessToken, error, loading } = useAppSelector(
-    (state) => state.auth,
-  );
 
-  const submitForm: SubmitHandler<signInType> = async (data: TLoginForm) => {
-    if (searchParams.get("msg") === "account_created") setSearchParams("");
-    try {
-      await dispatch(actAuthLogin(data)).unwrap();
-      navigate("/");
-      dispatch(actGetWishlists());
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    return () => {
-      dispatch(resetUI());
-    };
-  }, [dispatch]);
-
+  const {accessToken, error, errors, handleSubmit, loading, register, submitForm, searchParams} = useLogin();
 
   if(accessToken) return <Navigate to="/" />
   return (

@@ -1,56 +1,16 @@
-import { useAppDispatch, useAppSelector } from "@store/hooks";
-import { actAuthRegister } from "@store/auth/authSlice";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
-
 import Heading from "@components/common/Heading";
 import Input from "@components/forms/Input";
 import { Form } from "react-bootstrap";
 import { Link, Navigate } from "react-router-dom";
-import { signUpScheema, type signUpType } from "@validation/signUpSchema";
-import useCheckEmailAvailability from "@hooks/useCheckEmailAvailability";
+
 import SuccessSVG from "@assets/svg/success.svg?react";
 import LockSVG from "@assets/svg/lock.svg?react";
-import type { TRegisterForm } from "@customTypes/auth";
+import { useRegister } from "@hooks/useRegister";
 
 export const Register = () => {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const { error, loading, accessToken } = useAppSelector((state) => state.auth);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    getFieldState,
-    trigger,
-  } = useForm<signUpType>({
-    resolver: zodResolver(signUpScheema),
-    mode: "all",
-  });
-  const {
-    checkEmailAvailability,
-    emailAvailabilityStatus,
-    enteredEmail,
-    resetCheckEmailAvailability,
-  } = useCheckEmailAvailability();
-  const emailOnBlurHandler = async (e: React.FocusEvent<HTMLInputElement>) => {
-    await trigger("email");
-    const { isDirty, invalid } = getFieldState("email");
-    const value = e.target.value;
+  const { accessToken, handleSubmit, submitForm, register, errors, error, emailAvailabilityStatus, emailOnBlurHandler, loading } = useRegister();
 
-    if (isDirty && !invalid && enteredEmail !== value) {
-      await checkEmailAvailability(value);
-    }
-    if (isDirty && invalid && enteredEmail) {
-      resetCheckEmailAvailability();
-    }
-  };
-  const submitForm: SubmitHandler<signUpType> = async(data: TRegisterForm) => {
-    await dispatch(actAuthRegister(data)).unwrap().then(()=>{navigate('/login?msg=account_created')});
-  };
-    if(accessToken) return <Navigate to="/" />
-
+  if (accessToken) return <Navigate to="/" />;
   return (
     <div className="w-full bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-xl flex flex-col lg:flex-row my-auto">
       {/* LEFT COLUMN - Registration Form */}
@@ -135,7 +95,15 @@ export const Register = () => {
             <button
               type="submit"
               className="w-full bg-rose-600 hover:bg-rose-800 disabled:bg-gray-400 disabled:hover:bg-gray-400 disabled:cursor-not-allowed text-white rounded-3xl! py-3 font-medium mt-2 cursor-pointer"
-              disabled={emailAvailabilityStatus === "notAvailable" || !!errors.firstname || !!errors.lastname || !!errors.email || !!errors.password || !!errors.confirmPassword || loading === "pending"}
+              disabled={
+                emailAvailabilityStatus === "notAvailable" ||
+                !!errors.firstname ||
+                !!errors.lastname ||
+                !!errors.email ||
+                !!errors.password ||
+                !!errors.confirmPassword ||
+                loading === "pending"
+              }
             >
               Register
             </button>
