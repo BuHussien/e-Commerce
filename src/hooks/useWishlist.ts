@@ -16,7 +16,8 @@ const useWishlist = () => {
   const wishlistProducts = records.filter((product) =>
     wishlistItemsIds.includes(product.id),
   );
-  return { loading, error, wishlistProducts };
+  const isUserAccess: boolean = (useAppSelector(state => state.auth).accessToken) ? true : false;
+  return { loading, error, wishlistProducts, isUserAccess };
 };
 
 export default useWishlist;

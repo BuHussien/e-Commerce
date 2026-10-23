@@ -4,8 +4,9 @@ import Loading from "@components/feedback/Loading";
 import LottieHandler from "@components/feedback/LottieHandler";
 import useProducts from "@hooks/useProducts";
 
+
 export const Products = () => {
-  const { catPrefix, error, loading, records, wishlistItemsIds } =
+  const { catPrefix, error, loading, records, wishlistItemsIds, isUserAccess } =
     useProducts();
   return (
     <Loading status={loading} error={error ?? null} skeletonFor="products">
@@ -24,6 +25,7 @@ export const Products = () => {
                   <Product
                     key={record.id}
                     {...record}
+                    isUserAccess = {isUserAccess}
                     isLiked={wishlistItemsIds.includes(record.id)}
                   />
                 ))}

@@ -1,30 +1,56 @@
+import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { actAuthRegister } from "@store/auth/authSlice";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
+
 import Heading from "@components/common/Heading";
 import Input from "@components/forms/Input";
 import { Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import {signUpScheema,type signUpType} from "@validation/signUpSchema"
+import { Link, Navigate } from "react-router-dom";
+import { signUpScheema, type signUpType } from "@validation/signUpSchema";
 import useCheckEmailAvailability from "@hooks/useCheckEmailAvailability";
 import SuccessSVG from "@assets/svg/success.svg?react";
 import LockSVG from "@assets/svg/lock.svg?react";
+import type { TRegisterForm } from "@customTypes/auth";
 
 export const Register = () => {
-  const { register, handleSubmit, formState: {errors}, getFieldState, trigger } = useForm<signUpType>({resolver: zodResolver(signUpScheema), mode:"all"});
-  const {checkEmailAvailability, emailAvailabilityStatus, enteredEmail, resetCheckEmailAvailability} = useCheckEmailAvailability();
-  const emailOnBlurHandler = async(e: React.FocusEvent<HTMLInputElement>) => {
-    await trigger('email');
-    const {isDirty,invalid} = getFieldState("email");
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { error, loading, accessToken } = useAppSelector((state) => state.auth);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    getFieldState,
+    trigger,
+  } = useForm<signUpType>({
+    resolver: zodResolver(signUpScheema),
+    mode: "all",
+  });
+  const {
+    checkEmailAvailability,
+    emailAvailabilityStatus,
+    enteredEmail,
+    resetCheckEmailAvailability,
+  } = useCheckEmailAvailability();
+  const emailOnBlurHandler = async (e: React.FocusEvent<HTMLInputElement>) => {
+    await trigger("email");
+    const { isDirty, invalid } = getFieldState("email");
     const value = e.target.value;
 
-    if(isDirty && !invalid && enteredEmail !== value){
+    if (isDirty && !invalid && enteredEmail !== value) {
       await checkEmailAvailability(value);
     }
     if (isDirty && invalid && enteredEmail) {
       resetCheckEmailAvailability();
     }
-  }
-  const submitForm: SubmitHandler<signUpType> = (data) => console.log('submited');
+  };
+  const submitForm: SubmitHandler<signUpType> = async(data: TRegisterForm) => {
+    await dispatch(actAuthRegister(data)).unwrap().then(()=>{navigate('/login?msg=account_created')});
+  };
+    if(accessToken) return <Navigate to="/" />
+
   return (
     <div className="w-full bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-xl flex flex-col lg:flex-row my-auto">
       {/* LEFT COLUMN - Registration Form */}
@@ -41,26 +67,75 @@ export const Register = () => {
         <div className="w-full max-w-md mx-auto my-auto">
           <Form onSubmit={handleSubmit(submitForm)} className="space-y-4">
             <div className="flex gap-4">
-              <Input styles="w-1/2" label="first name" placeholder="John" type="text" register={register} name="firstname" error={errors.firstname?.message}/>
-              <Input styles="w-1/2" label="last name" placeholder="Doe" type="text" register={register} name="lastname" error={errors.lastname?.message}/>
+              <Input
+                styles="w-1/2"
+                label="first name"
+                placeholder="John"
+                type="text"
+                register={register}
+                name="firstname"
+                error={errors.firstname?.message}
+              />
+              <Input
+                styles="w-1/2"
+                label="last name"
+                placeholder="Doe"
+                type="text"
+                register={register}
+                name="lastname"
+                error={errors.lastname?.message}
+              />
             </div>
             <Input
-              label="email" 
-              placeholder="john.doe@example.com" 
-              type="email" 
-              register={register} 
-              name="email" 
-              error={emailAvailabilityStatus === 'notAvailable' ? 'taken email, try another one' : errors.email?.message} 
+              label="email"
+              placeholder="john.doe@example.com"
+              type="email"
+              register={register}
+              name="email"
+              error={
+                emailAvailabilityStatus === "notAvailable"
+                  ? "taken email, try another one"
+                  : errors.email?.message
+              }
               onBlur={emailOnBlurHandler}
-              afterOnBlurOperationSuccessOrFailed={emailAvailabilityStatus === "available" ? <SuccessSVG /> : <LockSVG/>}
+              afterOnBlurOperationSuccessOrFailed={
+                emailAvailabilityStatus === "available" ? (
+                  <SuccessSVG />
+                ) : (
+                  <LockSVG />
+                )
+              }
             />
-            <Input label="password" placeholder="******" type="password" register={register} name="password" error={errors.password?.message}/>
-            <Input label="confirm Password" placeholder="******" type="password" register={register} name="confirmPassword" error={errors.confirmPassword?.message}/>
-            
+            <Input
+              label="password"
+              placeholder="******"
+              type="password"
+              register={register}
+              name="password"
+              error={errors.password?.message}
+            />
+            <Input
+              label="confirm Password"
+              placeholder="******"
+              type="password"
+              register={register}
+              name="confirmPassword"
+              error={errors.confirmPassword?.message}
+            />
+
+            {error && (
+              <p className="text-red-500 m-2 flex flex-col">
+                {`${error}`}{" "}
+                <span className="text-yellow-600">
+                  refresh the page and try again
+                </span>
+              </p>
+            )}
+
             <button
               type="submit"
               className="w-full bg-rose-600 hover:bg-rose-800 disabled:bg-gray-400 disabled:hover:bg-gray-400 disabled:cursor-not-allowed text-white rounded-3xl! py-3 font-medium mt-2 cursor-pointer"
-              disabled = {emailAvailabilityStatus === 'notAvailable' || !!errors.firstname || !!errors.lastname || !!errors.email || !!errors.password || !!errors.confirmPassword}
+              disabled={emailAvailabilityStatus === "notAvailable" || !!errors.firstname || !!errors.lastname || !!errors.email || !!errors.password || !!errors.confirmPassword || loading === "pending"}
             >
               Register
             </button>

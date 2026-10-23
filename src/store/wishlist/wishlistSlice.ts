@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import actLikeToggle from "./act/likeToggle";
 import type { TLoading } from "@customTypes/shared";
 import actGetWishlists from "./act/getWishlist";
+import { logout } from "@store/auth/authSlice";
 
 interface IWishlist {
   itemsIds: number[];
@@ -17,7 +18,13 @@ const initialState: IWishlist = {
 const wishlistSlice = createSlice({
   name: "wishlist",
   initialState,
-  reducers: {},
+  reducers: {
+    clearWishlist: (state) => {
+      state.itemsIds = [];
+      state.loading = "idle";
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(actLikeToggle.pending, (state) => {
       state.loading = "pending";
@@ -58,8 +65,14 @@ const wishlistSlice = createSlice({
         state.error = action.payload;
       }
     });
+    builder.addCase(logout, state => {
+      state.itemsIds = [],
+      state.error = null,
+      state.loading = "idle"
+    });
   },
 });
 
 export default wishlistSlice.reducer;
 export { actLikeToggle };
+export const { clearWishlist } = wishlistSlice.actions;

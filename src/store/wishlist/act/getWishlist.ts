@@ -13,10 +13,11 @@ export const actGetWishlists = createAsyncThunk<
   number[],
   void,
   { rejectValue: string }
->("wishlist/actGetWishlists", async (_, { rejectWithValue }) => {
+>("wishlist/actGetWishlists", async (_, { rejectWithValue, getState }) => {
   try {
+    const {auth} = getState() as RootState;
     const response =
-      await axiosInstance.get<TWishlistItem[]>("/wishlist?userId=1");
+      await axiosInstance.get<TWishlistItem[]>(`/wishlist?userId=${auth.user?.id}`);
     return response.data.map((item) => item.productId);
   } catch (error) {
     return rejectWithValue(AxiosErrorHandler(error));

@@ -30,7 +30,9 @@ const useProducts = () => {
   }, [dispatch, catPrefix]);
 
   const wishlistItemsIds = useAppSelector((state) => state.wishlist.itemsIds);
-  return { loading, error, records, catPrefix, wishlistItemsIds };
+      const isUserAccess: boolean = (useAppSelector(state => state.auth).accessToken) ? true : false;
+
+  return { loading, error, records, catPrefix, wishlistItemsIds, isUserAccess };
 };
 
 export default useProducts;

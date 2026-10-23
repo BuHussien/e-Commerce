@@ -4,29 +4,40 @@ import categories from "@store/categories/categoriesSlice";
 import products from "@store/products/productsSlice";
 import cart from "@store/cart/cartSlice";
 import wishlist from "@store/wishlist/wishlistSlice";
+import auth from "@store/auth/authSlice"
 import storageModule from "redux-persist/lib/storage";
 import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
 const storage = (storageModule as any).default ?? storageModule;
 
+const rootPersistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["cart","auth"],
+};
+
+const authPersistConfig = {
+  key: "auth",
+  storage,
+  whitelist: ["accessToken","user"]
+};
 const cartPersistConfig = {
   key: "cart",
   storage,
   whitelist: ["items"],
 };
-const wishlistPersistConfig = {
-  key: "wishlist",
-  storage,
-  whitelist: ["itemsIds"],
-};
+
 const rootReducer = combineReducers({
   categories,
   products,
+  wishlist,
+  auth: persistReducer(authPersistConfig,auth),
   cart: persistReducer(cartPersistConfig, cart),
-  wishlist: persistReducer(wishlistPersistConfig, wishlist),
 });
 
+const persistedReducer = persistReducer(rootPersistConfig,rootReducer)
+
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {

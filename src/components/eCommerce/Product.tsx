@@ -7,7 +7,7 @@ import FilledWishList from "@assets/svg/filledWishlist.svg?react";
 import { actLikeToggle } from "@store/wishlist/wishlistSlice";
 import { useNavigate } from "react-router-dom";
 
-const Product = ({ id, img, title, price, cat_prefix, description, isLiked }: TProduct & { isLiked: boolean }) => {
+const Product = ({ id, img, title, price, cat_prefix, description, isLiked, isUserAccess}: TProduct & { isLiked: boolean, isUserAccess?: boolean }) => {
 
   const dispatch = useAppDispatch();
   const [isDisabled, setIsDisabled] = useState(false);
@@ -24,7 +24,10 @@ const Product = ({ id, img, title, price, cat_prefix, description, isLiked }: TP
   };
   
   const likeToggleHandler = () => {
-    dispatch(actLikeToggle(id));
+    if(isUserAccess)
+      dispatch(actLikeToggle(id));
+    else
+      return navigate('/login')
   };
   const navigate = useNavigate();
   const onProductClick = () => {

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "@services/axios-global";
+import type { RootState } from "@store/index";
 import AxiosErrorHandler from "@utilities/AxiosErrorHandler";
 
 type TLikeToggleResponse = {
@@ -11,10 +12,11 @@ const actLikeToggle = createAsyncThunk<
   TLikeToggleResponse,
   number,
   { rejectValue: string }
->("wishlist/actLikeToggle", async (id, { rejectWithValue }) => {
+>("wishlist/actLikeToggle", async (id, { rejectWithValue, getState }) => {
   try {
+    const {auth} = getState() as RootState;
     const response = await axiosInstance.get(
-      `/wishlist?userId=1&productId=${id}`,
+      `/wishlist?userId=${auth.user?.id}&productId=${id}`,
     );
 
     if (response.data.length > 0) {
@@ -23,7 +25,7 @@ const actLikeToggle = createAsyncThunk<
     }
 
     await axiosInstance.post("/wishlist", {
-      userId: 1,
+      userId: auth.user?.id,
       productId: id,
     });
 

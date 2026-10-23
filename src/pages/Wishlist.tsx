@@ -4,8 +4,9 @@ import Loading from "@components/feedback/Loading";
 import LottieHandler from "@components/feedback/LottieHandler";
 import useWishlist from "@hooks/useWishlist";
 
+
 const Wishlist = () => {
-  const { error, loading, wishlistProducts } = useWishlist();
+  const { error, loading, wishlistProducts, isUserAccess} = useWishlist();
   return (
     <Loading status={loading} error={error ?? null} skeletonFor="wishlist">
       {wishlistProducts.length > 0 ? (
@@ -21,7 +22,7 @@ const Wishlist = () => {
               {wishlistProducts.length > 0 ? (
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
                   {wishlistProducts.map((product) => (
-                    <Product key={product.id} {...product} isLiked={true} />
+                    <Product key={product.id} {...product} isLiked={true} isUserAccess={isUserAccess} />
                   ))}
                 </div>
               ) : (

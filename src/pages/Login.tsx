@@ -1,15 +1,48 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod"
+import { zodResolver } from "@hookform/resolvers/zod";
 import Heading from "@components/common/Heading";
 import Input from "@components/forms/Input";
-import { Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import {signInScheema,type signInType} from "@validation/signInSchema"
+import { Alert, Form } from "react-bootstrap";
+import { Link, useSearchParams, useNavigate, Navigate } from "react-router-dom";
+import { signInScheema, type signInType } from "@validation/signInSchema";
+import type { TLoginForm } from "@customTypes/auth";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { actAuthLogin, resetUI } from "@store/auth/authSlice";
+import { useEffect } from "react";
+import actGetWishlists from "@store/wishlist/act/getWishlist";
 
 export const Login = () => {
-  const { register, handleSubmit, formState: {errors} } = useForm<signInType>({resolver: zodResolver(signInScheema)});
-  const submitForm: SubmitHandler<signInType> = (data) => console.log(data);
-  
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams("msg");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<signInType>({ resolver: zodResolver(signInScheema) });
+
+  const { accessToken, error, loading } = useAppSelector(
+    (state) => state.auth,
+  );
+
+  const submitForm: SubmitHandler<signInType> = async (data: TLoginForm) => {
+    if (searchParams.get("msg") === "account_created") setSearchParams("");
+    try {
+      await dispatch(actAuthLogin(data)).unwrap();
+      navigate("/");
+      dispatch(actGetWishlists());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    return () => {
+      dispatch(resetUI());
+    };
+  }, [dispatch]);
+
+
+  if(accessToken) return <Navigate to="/" />
   return (
     <div className="w-full bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-xl flex flex-col lg:flex-row my-auto">
       {/* LEFT COLUMN - Login Form */}
@@ -26,17 +59,30 @@ export const Login = () => {
         <div className="w-full max-w-md mx-auto my-auto">
           <Form onSubmit={handleSubmit(submitForm)} className="space-y-4">
             <Input
-              label="email" 
-              placeholder="john.doe@example.com" 
-              type="email" 
-              register={register} 
-              name="email" 
-              error={errors.email?.message} 
+              label="email"
+              placeholder="john.doe@example.com"
+              type="email"
+              register={register}
+              name="email"
+              error={errors.email?.message}
             />
-            <Input label="password" placeholder="******" type="password" register={register} name="password" error={errors.password?.message}/>
+            <Input
+              label="password"
+              placeholder="******"
+              type="password"
+              register={register}
+              name="password"
+              error={errors.password?.message}
+            />
+
+            {error && (
+              <p className="text-red-500 m-2 flex flex-col">{`${error}`}</p>
+            )}
+
             <button
               type="submit"
-              className="w-full bg-rose-600 hover:bg-rose-800 text-white rounded-3xl! py-3 font-medium  mt-2 cursor-pointer"
+              className="w-full bg-rose-600 hover:bg-rose-800 text-white rounded-3xl! py-3 font-medium  mt-2 cursor-pointer disabled:bg-gray-500"
+              disabled={loading === "pending"}
             >
               Login
             </button>
@@ -53,7 +99,6 @@ export const Login = () => {
           </Form>
         </div>
       </div>
-
       {/* RIGHT COLUMN - Brand Banner aligned with Header & Footer Theme */}
       <div className="hidden lg:flex w-1/2 bg-linear-to-br from-rose-600 via-rose-700 to-zinc-900 p-12 text-white flex-col justify-between relative overflow-hidden">
         {/* Ambient Glows */}
@@ -65,13 +110,21 @@ export const Login = () => {
             NOOR STORE
           </span>
         </div>
-
+        {searchParams.get("msg") === "account_created" && (
+          <Alert
+            variant="success"
+            className="absolute top-0 right-0 w-auto max-w-md bg-blue-400"
+          >
+            Account created successfully. Try to log in.
+          </Alert>
+        )}
         <div className="relative z-10 space-y-4 max-w-lg">
           <h2 className="text-3xl xl:text-4xl font-extrabold leading-tight text-white">
             Glad to Have You Back
           </h2>
           <p className="text-rose-100 text-sm leading-relaxed opacity-90">
-            Log in to access your personal cart, saved wishlist items, order history, and exclusive member discount offers.
+            Log in to access your personal cart, saved wishlist items, order
+            history, and exclusive member discount offers.
           </p>
         </div>
 

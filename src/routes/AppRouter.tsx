@@ -17,7 +17,9 @@ import actGetWishlists from "@store/wishlist/act/getWishlist";
 import { useEffect } from "react";
 import Contact from "@pages/contact";
 import PageSuspenseFallback from "@components/feedback/PageSuspenseFallback";
+import ProtectedRoutes from "@components/auth/ProtectedRoutes";
 import ProductDetails from "@pages/ProductDetails";
+import Profile from "@pages/Profile";
 
 const router = createBrowserRouter([
   {
@@ -33,9 +35,9 @@ const router = createBrowserRouter([
       { path: "login", element: <PageSuspenseFallback> <Login /> </PageSuspenseFallback>},
       { path: "register", element: <PageSuspenseFallback> <Register /> </PageSuspenseFallback>},
       { path: "cart", element: <PageSuspenseFallback> <Cart /> </PageSuspenseFallback>},
-      { path: "wishlist", element: <PageSuspenseFallback> <Wishlist /> </PageSuspenseFallback>},
       {path: "contact", element: <PageSuspenseFallback> <Contact /> </PageSuspenseFallback>},
-
+      { path: "wishlist", element: <ProtectedRoutes><PageSuspenseFallback> <Wishlist /> </PageSuspenseFallback></ProtectedRoutes>},
+      { path: "profile", element: <ProtectedRoutes><PageSuspenseFallback> <Profile /> </PageSuspenseFallback></ProtectedRoutes>},
     ],
   },
 ]);
