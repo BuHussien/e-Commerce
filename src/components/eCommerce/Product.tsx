@@ -5,6 +5,7 @@ import { memo, useState } from "react";
 import WishList from "@assets/svg/wishlist.svg?react";
 import FilledWishList from "@assets/svg/filledWishlist.svg?react";
 import { actLikeToggle } from "@store/wishlist/wishlistSlice";
+import { useNavigate } from "react-router-dom";
 
 const Product = ({ id, img, title, price, cat_prefix, description, isLiked }: TProduct & { isLiked: boolean }) => {
 
@@ -25,6 +26,11 @@ const Product = ({ id, img, title, price, cat_prefix, description, isLiked }: TP
   const likeToggleHandler = () => {
     dispatch(actLikeToggle(id));
   };
+  const navigate = useNavigate();
+  const onProductClick = () => {
+    navigate(`/products/${id}`);
+  };
+
   return (
     <div className="group bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 overflow-hidden transition-all duration-300 flex flex-col justify-center px-3 py-3 m-3 hover:-translate-y-1 hover:border-rose-500">
       <div
@@ -33,7 +39,7 @@ const Product = ({ id, img, title, price, cat_prefix, description, isLiked }: TP
       >
         {isLiked ? <FilledWishList /> : <WishList />}
       </div>
-      <div className="relative w-full h-64 bg-gray-50 overflow-hidden flex justify-center items-center">
+      <div className="relative w-full h-64 bg-gray-50 overflow-hidden flex justify-center items-center cursor-pointer" onClick={onProductClick}>
         <img
           src={img}
           alt={title}
@@ -45,8 +51,8 @@ const Product = ({ id, img, title, price, cat_prefix, description, isLiked }: TP
         </span>
       </div>
 
-      <div className="p-2 flex flex-col grow">
-        <h4 className="text-sm font-bold text-gray-800 mb-2 truncate">
+      <div className="p-2 flex flex-col grow" >
+        <h4 className="text-sm font-bold text-gray-800 mb-2 truncate cursor-pointer" onClick={onProductClick}>
           {title}
         </h4>
 

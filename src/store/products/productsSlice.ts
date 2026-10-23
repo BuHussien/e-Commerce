@@ -3,15 +3,18 @@ import actGetProductsByCategoryPrefix from "./act/getProductsByCategoryPrefix";
 import type { TLoading } from "@customTypes/shared";
 import type { TProduct } from "@customTypes/product";
 import actGetAllProducts from "./act/getAllProducts";
+import actGetSingleProduct from "./act/getSingleProduct";
 
 interface IProductsState {
   records: TProduct[];
+  record: TProduct | null;
   loading: TLoading;
   error?: string | null;
 }
 
 const initialState: IProductsState = {
   records: [],
+  record: null,
   loading: "idle",
   error: null,
 };
@@ -60,6 +63,23 @@ const productsSlice = createSlice({
         state.records = action.payload;
       })
       .addCase(actGetAllProducts.rejected, (state, action) => {
+        state.loading = "failed";
+        state.error =
+          typeof action.payload === "string"
+            ? action.payload
+            : action.error.message || "An unknown error occurred";
+      });
+    builder
+      .addCase(actGetSingleProduct.pending, (state) => {
+        state.loading = "pending";
+        state.error = null;
+      })
+      .addCase(actGetSingleProduct.fulfilled, (state, action) => {
+        state.loading = "succeeded";
+        state.error = null;
+        state.record = action.payload;
+      })
+      .addCase(actGetSingleProduct.rejected, (state, action) => {
         state.loading = "failed";
         state.error =
           typeof action.payload === "string"

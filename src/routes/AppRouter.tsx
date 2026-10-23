@@ -17,6 +17,7 @@ import actGetWishlists from "@store/wishlist/act/getWishlist";
 import { useEffect } from "react";
 import Contact from "@pages/contact";
 import PageSuspenseFallback from "@components/feedback/PageSuspenseFallback";
+import ProductDetails from "@pages/ProductDetails";
 
 const router = createBrowserRouter([
   {
@@ -27,12 +28,14 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "categories", element: <PageSuspenseFallback> <Categories /> </PageSuspenseFallback>},
       { path: "products", element: <PageSuspenseFallback> <Products /> </PageSuspenseFallback>},
+      { path: `products/:id`, element: <PageSuspenseFallback> <ProductDetails /> </PageSuspenseFallback>},
       { path: "about-us", element: <PageSuspenseFallback> <AboutUs /> </PageSuspenseFallback>},
       { path: "login", element: <PageSuspenseFallback> <Login /> </PageSuspenseFallback>},
       { path: "register", element: <PageSuspenseFallback> <Register /> </PageSuspenseFallback>},
       { path: "cart", element: <PageSuspenseFallback> <Cart /> </PageSuspenseFallback>},
       { path: "wishlist", element: <PageSuspenseFallback> <Wishlist /> </PageSuspenseFallback>},
       {path: "contact", element: <PageSuspenseFallback> <Contact /> </PageSuspenseFallback>},
+
     ],
   },
 ]);
