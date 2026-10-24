@@ -1,15 +1,56 @@
+import { useAppDispatch } from "@store/hooks";
+import CheckoutModal from "./CheckoutModal";
+import { useNavigate } from "react-router-dom";
+import actPlaceOrder from "@store/orders/act/actPlaceOrder";
+import { emptyCart } from "@store/cart/cartSlice";
+import { useState } from "react";
+
 interface IProps {
   totalQuantity: number;
   subtotal: number;
   shipping: number;
   total: number;
+  useAccessToken: string | null;
 }
 
-const CartSummary = ({shipping,subtotal,total,totalQuantity}: IProps) => {
+const CartSummary = ({ shipping, subtotal, total, totalQuantity, useAccessToken }: IProps) => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const onSubmitHandler = async () => {
+    try {
+      await dispatch(
+        actPlaceOrder({ subTotal: subtotal, shipping: shipping }),
+      ).unwrap();
+      setIsSuccess(true);
+
+      setTimeout(() => {
+        dispatch(emptyCart());
+        navigate("/orders");
+      }, 3000);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  if (isSuccess) {
+    return (
+      <div className="flex flex-col items-center justify-center py-12 text-center">
+        <div className="animate-bounce text-5xl mb-4">🎉</div>
+        <h2 className="text-xl font-bold text-gray-900">
+          Order Placed Successfully!
+        </h2>
+        <p className="text-sm text-gray-500 mt-2">
+          Redirecting to home page...
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <h2 className="text-lg font-bold text-gray-900">Order Summary</h2>
-
       <div className="mt-6 space-y-4">
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">
@@ -34,13 +75,22 @@ const CartSummary = ({shipping,subtotal,total,totalQuantity}: IProps) => {
         </div>
       </div>
 
-      <button
-        type="button"
-        className="mt-6 w-full rounded-xl bg-rose-600 px-5 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:bg-rose-700 active:scale-[0.99]"
-      >
-        Proceed to Checkout
-        <span className="ml-2">→</span>
-      </button>
+      {useAccessToken ? (
+        <CheckoutModal
+          subtotal={subtotal}
+          shippingFees={shipping}
+          onSubmit={onSubmitHandler}
+        />
+      ) : (
+        <button
+          type="button"
+          className="mt-6 w-full rounded-xl bg-gray-400 px-5 py-3.5 text-sm font-semibold text-black shadow-sm transition hover:bg-gray-500 active:scale-[0.99]"
+          disabled
+        >
+          Login to checkOut
+          <span className="ml-2">→</span>
+        </button>
+      )}
 
       <div className="mt-5 flex items-center justify-center gap-2 text-xs text-gray-400">
         <svg

@@ -15,6 +15,7 @@ const Cart = () => {
     totalQuantity,
     shipping,
     subtotal,
+    useAccessToken,
   } = useCart();
   return (
     <Loading status={loading} error={error} skeletonFor="cart">
@@ -75,6 +76,7 @@ const Cart = () => {
                 subtotal={subtotal}
                 total={total}
                 totalQuantity={totalQuantity}
+                useAccessToken={useAccessToken}
               />
             </aside>
           </div>

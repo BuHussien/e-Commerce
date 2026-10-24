@@ -10,10 +10,12 @@ const Login = lazy(() =>import("@pages/Login").then(({ Login }) => ({ default: L
 const Register = lazy(() =>import("@pages/Register").then(({ Register }) => ({default: Register})));
 const Cart = lazy(() => import("@pages/Cart"));
 const Wishlist = lazy(() => import("@pages/Wishlist"))
+const Orders = lazy(() => import("@pages/Orders"));
 
 
 import { useAppDispatch } from "@store/hooks";
 import actGetWishlists from "@store/wishlist/act/getWishlist";
+// import actGetOrders from "@store/orders/act/actGetOrders";
 import { useEffect } from "react";
 import Contact from "@pages/contact";
 import PageSuspenseFallback from "@components/feedback/PageSuspenseFallback";
@@ -38,15 +40,17 @@ const router = createBrowserRouter([
       {path: "contact", element: <PageSuspenseFallback> <Contact /> </PageSuspenseFallback>},
       { path: "wishlist", element: <ProtectedRoutes><PageSuspenseFallback> <Wishlist /> </PageSuspenseFallback></ProtectedRoutes>},
       { path: "profile", element: <ProtectedRoutes><PageSuspenseFallback> <Profile /> </PageSuspenseFallback></ProtectedRoutes>},
+      { path: "orders", element: <ProtectedRoutes><PageSuspenseFallback> <Orders /> </PageSuspenseFallback></ProtectedRoutes>},
     ],
   },
 ]);
 
 export const AppRouter = () => {
   const dispatch = useAppDispatch();
-  // Fetch Wishlists from DB
+  // Fetch Wishlists and Orders from DB
   useEffect(() => {
     dispatch(actGetWishlists());
+    // dispatch(actGetOrders());
   }, [dispatch]);
 
   return <RouterProvider router={router} />;

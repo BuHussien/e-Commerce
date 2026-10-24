@@ -17,6 +17,7 @@
     "@tailgrids/icons": "^2.0.1",
     "axios": "^1.20.0",
     "bootstrap": "^5.3.8",
+    "class-variance-authority": "^0.7.1",
     "lottie-react": "^3.1.2",
     "react": "^19.2.8",
     "react-aria-components": "^1.22.1",

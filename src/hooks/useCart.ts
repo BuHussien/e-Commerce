@@ -4,9 +4,8 @@ import getProductsFullInfo from "@store/cart/getProductsFullInfo";
 import { cleanCartProductsFullInfo } from "@store/cart/cartSlice";
 const useCart = () => {
   const dispatch = useAppDispatch();
-  const { productsFullInfo, loading, error } = useAppSelector(
-    (state) => state.cart,
-  );
+  const { productsFullInfo, loading, error } = useAppSelector((state) => state.cart);
+  const useAccessToken = useAppSelector(state => state.auth.accessToken);
   useEffect(() => {
     dispatch(getProductsFullInfo());
     return () => {
@@ -24,7 +23,7 @@ const useCart = () => {
     0,
   );
 
-  return {loading, error, productsFullInfo, total,totalQuantity,shipping,subtotal};
+  return {loading, error, productsFullInfo,useAccessToken, total,totalQuantity,shipping,subtotal};
 };
 
 export default useCart;

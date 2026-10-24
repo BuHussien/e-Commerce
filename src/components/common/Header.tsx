@@ -90,7 +90,7 @@ const Header = () => {
             {/* Drop Down Menu (ProfileMenu at the far right/end of desktop layout) */}
             {accessToken && (
               <div className="pl-2">
-                <ProfileMenu name={user?.lastname || ""} />
+                <ProfileMenu name={user?.firstname || ""} />
               </div>
             )}
           </div>
@@ -192,7 +192,7 @@ const Header = () => {
               </>
             ) : (
               <div className="flex justify-start pt-1">
-                <ProfileMenu name={user?.lastname || ""} />
+                <ProfileMenu name={user?.firstname || ""} />
               </div>
             )}
           </div>

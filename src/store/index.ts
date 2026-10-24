@@ -3,22 +3,30 @@ import { persistStore, persistReducer } from "redux-persist";
 import categories from "@store/categories/categoriesSlice";
 import products from "@store/products/productsSlice";
 import cart from "@store/cart/cartSlice";
+import orders from "@store/orders/ordersSlice";
 import wishlist from "@store/wishlist/wishlistSlice";
-import auth from "@store/auth/authSlice"
+import auth from "@store/auth/authSlice";
 import storageModule from "redux-persist/lib/storage";
-import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
+import {
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
 const storage = (storageModule as any).default ?? storageModule;
 
 const rootPersistConfig = {
   key: "root",
   storage,
-  whitelist: ["cart","auth"],
+  whitelist: ["cart", "auth"],
 };
 
 const authPersistConfig = {
   key: "auth",
   storage,
-  whitelist: ["accessToken","user"]
+  whitelist: ["accessToken", "user"],
 };
 const cartPersistConfig = {
   key: "cart",
@@ -30,18 +38,19 @@ const rootReducer = combineReducers({
   categories,
   products,
   wishlist,
-  auth: persistReducer(authPersistConfig,auth),
+  auth: persistReducer(authPersistConfig, auth),
   cart: persistReducer(cartPersistConfig, cart),
+  orders,
 });
 
-const persistedReducer = persistReducer(rootPersistConfig,rootReducer)
+const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
 
 const store = configureStore({
   reducer: persistedReducer,
-  middleware: getDefaultMiddleware =>
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
 });
