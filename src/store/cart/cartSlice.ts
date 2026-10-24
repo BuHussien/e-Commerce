@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { getTotalCartQntSelector } from "./cartSelectors";
 import getProductsFullInfo from "./getProductsFullInfo";
 import type { IFullProductCart } from "@customTypes/cart";
@@ -22,12 +22,15 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addToCart: (state, action) => {
-      const id = action.payload;
+    addToCart: (state, action: PayloadAction<{id: number, qnt?: number}>) => {
+      const id = action.payload.id;
+      let qnt = action.payload.qnt;
+      if(!qnt) qnt = 1
+
       if (state.items[id]) {
-        state.items[id]++;
+        state.items[id]+=qnt;
       } else {
-        state.items[id] = 1;
+        state.items[id] = qnt;
       }
     },
     removeFromCart: (state, action) => {

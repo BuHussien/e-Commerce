@@ -16,7 +16,7 @@ const Product = ({ id, img, title, price, cat_prefix, description, isLiked, isUs
     if (isDisabled) return;
 
     setIsDisabled(true);
-    dispatch(addToCart(id));
+    dispatch(addToCart({id: id}));
 
     setTimeout(() => {
       setIsDisabled(false);

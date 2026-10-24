@@ -1,14 +1,27 @@
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import actGetSingleProduct from "@store/products/act/getSingleProduct";
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-
+import { useParams, Link, useNavigate } from "react-router-dom";
+import WishList from "@assets/svg/wishlist.svg?react";
+import FilledWishList from "@assets/svg/filledWishlist.svg?react";
+import { actLikeToggle } from "@store/wishlist/wishlistSlice";
+import {addToCart} from "@store/cart/cartSlice"
 const ProductDetails = () => {
+ const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const [quantity, setQuantity] = useState(1);
-  const [isWishlist, setIsWishlist] = useState(false);
 
+
+  const isLiked = useAppSelector(state => state.wishlist.itemsIds.includes(Number(id)));
+  const isUserAccess = useAppSelector(state => state.auth.accessToken);
+
+   const likeToggleHandler = () => {
+    if(isUserAccess)
+      dispatch(actLikeToggle(Number(id)));
+    else
+      return navigate('/login')
+  };
   const { record, loading, error } = useAppSelector((state) => state.products);
 
   useEffect(() => {
@@ -80,7 +93,7 @@ const ProductDetails = () => {
   }
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+    <div className="zoom-83 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
       {/* Breadcrumb Navigation */}
       <nav className="flex items-center gap-2 text-sm text-gray-500 mb-8 font-medium">
         <Link to="/" className="hover:text-gray-900 transition-colors">
@@ -105,7 +118,7 @@ const ProductDetails = () => {
               <img
                 src={record?.img}
                 alt={record?.title}
-                className="w-full h-full object-cover object-center transform transition-transform duration-700 ease-out group-hover:scale-105"
+                className="w-full h-full object-scale-down object-center transform transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </div>
 
@@ -117,27 +130,12 @@ const ProductDetails = () => {
             </div>
 
             {/* Wishlist Button */}
-            <button
-              onClick={() => setIsWishlist(!isWishlist)}
-              className="absolute top-4 right-4 p-3 rounded-full bg-white/80 backdrop-blur-md text-gray-700 hover:text-red-500 shadow-sm border border-white/50 transition-all duration-300 active:scale-90"
-              aria-label="Add to wishlist"
+            <div
+              className="absolute top-5 right-5 z-1 cursor-pointer rounded-full p-2 hover:bg-pink-300"
+              onClick={likeToggleHandler}
             >
-              <svg
-                className={`w-5 h-5 transition-colors ${
-                  isWishlist
-                    ? "fill-red-500 stroke-red-500"
-                    : "fill-none stroke-currentColor"
-                }`}
-                viewBox="0 0 24 24"
-                strokeWidth="2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                />
-              </svg>
-            </button>
+              {isLiked ? <FilledWishList /> : <WishList />}
+            </div>
           </div>
 
           {/* Additional Meta Details */}
@@ -155,8 +153,8 @@ const ProductDetails = () => {
           <div className="flex flex-col">
             {/* Brand Header */}
             <div className="flex items-center gap-3 mb-4">
-              <span className="text-xs font-bold tracking-[0.2em] text-indigo-600 uppercase">
-                NOOR STORE
+              <span className="text-md font-bold tracking-[0.2em] text-indigo-600 uppercase">
+                NOOR <span className="text-xl bg-rose-600 text-white p-2 rounded-2xl">STORE</span>
               </span>
               <div className="h-px flex-1 bg-gray-100" />
               <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">
@@ -188,7 +186,7 @@ const ProductDetails = () => {
               <p className="text-sm sm:text-base text-gray-600 leading-relaxed font-normal">
                 {record?.description}
               </p>
-            </div>
+            </div>  
 
             {/* Specs Grid */}
             <div className="grid grid-cols-2 gap-3 my-6">
@@ -233,7 +231,9 @@ const ProductDetails = () => {
                 </div>
 
                 {/* Add to Cart CTA */}
-                <button className="flex-1 bg-gray-900 hover:bg-black text-white py-3.5 px-6 rounded-2xl text-sm font-bold transition-all duration-300 flex items-center justify-center gap-3 shadow-md hover:shadow-xl active:scale-[0.98] group">
+                <button className="flex-1 bg-rose-600 hover:bg-rose-800 text-white py-3.5 px-6 rounded-2xl text-sm font-bold transition-all duration-300 flex items-center justify-center gap-3 shadow-md hover:shadow-xl active:scale-[0.98] group"
+                  onClick={()=>dispatch(addToCart({id: Number(id), qnt: quantity}))}
+                >
                   <svg
                     className="w-5 h-5 group-hover:scale-110 transition-transform duration-300"
                     fill="none"
