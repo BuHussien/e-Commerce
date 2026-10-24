@@ -104,6 +104,10 @@ const ProductDetails = () => {
           Products
         </Link>
         <span className="text-gray-300">/</span>
+        <Link to={`/products?cat_prefix=${record.cat_prefix}`} className="hover:text-gray-900 transition-colors">
+          {record.cat_prefix}
+        </Link>
+        <span className="text-gray-300">/</span>
         <span className="text-gray-900 font-semibold truncate max-w-50 sm:max-w-xs">
           {record?.title}
         </span>
