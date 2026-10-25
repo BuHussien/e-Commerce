@@ -1,30 +1,20 @@
-import Heading from "@components/common/Heading";
-import { useAppDispatch, useAppSelector } from "@store/hooks";
-import actGetOrders from "@store/orders/act/actGetOrders";
-import actGetWishlists from "@store/wishlist/act/getWishlist";
-import actGetAddress from "@store/addresses/act/actGetAddress";
-import { useEffect, useState } from "react";
 
+import Heading from "@components/common/Heading";
 import { ProfileHeader } from "@components/eCommerce/ProfileHeader";
 import AccountNavigationGrid from "@components/eCommerce/AccountNavigationGrid";
 import SecurityModal from "@components/eCommerce/SecurityModal";
 import AddressModal from "@components/eCommerce/AddressModal";
+import { useProfileData } from "@hooks/useProfileData";
 
 const Profile = () => {
-  const dispatch = useAppDispatch();
-
-  const user = useAppSelector((state) => state.auth.user);
-  const ordersCount = useAppSelector((state) => state.orders.orderList.length);
-  const wishlistCount = useAppSelector((state) => state.wishlist.itemsIds.length);
-  const address = useAppSelector((state) => state.address);
-
-  const [activeModal, setActiveModal] = useState<null | "security" | "address">(null);
-
-  useEffect(() => {
-    dispatch(actGetOrders());
-    dispatch(actGetWishlists());
-    dispatch(actGetAddress());
-  }, [dispatch]);
+  const {
+    activeModal,
+    address,
+    ordersCount,
+    setActiveModal,
+    user,
+    wishlistCount,
+  } = useProfileData();
 
   return (
     <div className="container mx-auto py-10 px-4 max-w-5xl">
@@ -47,15 +37,24 @@ const Profile = () => {
             country: address.country,
           }}
         />
-        
+
         <div className="flex items-center gap-3 pt-3 md:pt-0 border-t md:border-t-0 border-slate-100">
           <div className="px-3.5 py-1.5 bg-rose-50/50 border border-rose-100 rounded-lg text-center min-w-23.75">
-            <span className="block text-base font-bold text-rose-700">{ordersCount}</span>
-            <span className="text-[11px] font-medium text-rose-600/80">Orders</span>
+            <span className="block text-base font-bold text-rose-700">
+              {ordersCount}
+            </span>
+            <span className="text-[11px] font-medium text-rose-600/80">
+              Orders
+            </span>
           </div>
+
           <div className="px-3.5 py-1.5 bg-pink-50/50 border border-pink-100 rounded-lg text-center min-w-23.75">
-            <span className="block text-base font-bold text-pink-700">{wishlistCount}</span>
-            <span className="text-[11px] font-medium text-pink-600/80">Wishlist</span>
+            <span className="block text-base font-bold text-pink-700">
+              {wishlistCount}
+            </span>
+            <span className="text-[11px] font-medium text-pink-600/80">
+              Wishlist
+            </span>
           </div>
         </div>
       </div>
@@ -67,8 +66,13 @@ const Profile = () => {
         openAddressModal={() => setActiveModal("address")}
       />
 
-      {activeModal === "security" && <SecurityModal onClose={() => setActiveModal(null)} />}
-      {activeModal === "address" && <AddressModal onClose={() => setActiveModal(null)} />}
+      {activeModal === "security" && (
+        <SecurityModal onClose={() => setActiveModal(null)} />
+      )}
+
+      {activeModal === "address" && (
+        <AddressModal onClose={() => setActiveModal(null)} />
+      )}
     </div>
   );
 };
