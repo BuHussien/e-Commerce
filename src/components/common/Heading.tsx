@@ -1,6 +1,6 @@
 interface IProps {
   headTitle: string;
-  Title: string;
+  Title?: string;
   description?: string;
   recordsLength?: string;
 }
@@ -13,9 +13,11 @@ const Heading = ({ headTitle, Title, description, recordsLength }: IProps) => {
           {headTitle}
         </p>
 
-        <h1 className="text-3xl font-black tracking-tight text-gray-900 sm:text-4xl">
-          {Title}
-        </h1>
+        {Title && (
+          <h1 className="text-3xl font-black tracking-tight text-gray-900 sm:text-4xl">
+            {Title}
+          </h1>
+        )}
 
         {description && (
           <p className="mt-3 max-w-xl text-sm leading-6 text-gray-500 sm:text-base">

@@ -7,8 +7,6 @@ import Heading from "@components/common/Heading";
 const Orders = () => {
   const dispatch = useAppDispatch();
   const { error, loading, orderList } = useAppSelector((state) => state.orders);
-
-  // حالة التحكم في فتح وغلق الـ Modal لعرض منتجات الطلب
   const [selectedOrder, setSelectedOrder] = useState<TOrderItem | null>(null);
 
   useEffect(() => {
@@ -58,7 +56,6 @@ const Orders = () => {
       <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-200">
         <Heading
           headTitle={" My Orders"}
-          Title={`View all your order history (${orderList.length} total)`}
         />
       </div>
 

@@ -22,6 +22,7 @@ import PageSuspenseFallback from "@components/feedback/PageSuspenseFallback";
 import ProtectedRoutes from "@components/auth/ProtectedRoutes";
 import ProductDetails from "@pages/ProductDetails";
 import Profile from "@pages/Profile";
+import ProfileLayout from "@layouts/ProfileLayout";
 
 const router = createBrowserRouter([
   {
@@ -39,10 +40,17 @@ const router = createBrowserRouter([
       { path: "cart", element: <PageSuspenseFallback> <Cart /> </PageSuspenseFallback>},
       {path: "contact", element: <PageSuspenseFallback> <Contact /> </PageSuspenseFallback>},
       { path: "wishlist", element: <ProtectedRoutes><PageSuspenseFallback> <Wishlist /> </PageSuspenseFallback></ProtectedRoutes>},
-      { path: "profile", element: <ProtectedRoutes><PageSuspenseFallback> <Profile /> </PageSuspenseFallback></ProtectedRoutes>},
-      { path: "orders", element: <ProtectedRoutes><PageSuspenseFallback> <Orders /> </PageSuspenseFallback></ProtectedRoutes>},
+      {
+        path: "me",
+        element: <ProtectedRoutes><PageSuspenseFallback> <ProfileLayout /> </PageSuspenseFallback></ProtectedRoutes>,
+        errorElement: <Error />,
+        children: [
+          {index: true, element: <PageSuspenseFallback><Profile /></PageSuspenseFallback>},
+          {path: "orders", element: <Orders />},
+        ]
+      }
     ],
-  },
+  }
 ]);
 
 export const AppRouter = () => {

@@ -27,7 +27,7 @@ const CartSummary = ({ shipping, subtotal, total, totalQuantity, useAccessToken 
 
       setTimeout(() => {
         dispatch(emptyCart());
-        navigate("/orders");
+        navigate("/me/orders");
       }, 3000);
     } catch (error) {
       console.log(error);
