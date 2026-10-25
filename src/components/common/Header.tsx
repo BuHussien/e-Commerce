@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import "@styles/global.css";
 import React from "react";
 import HeaderCounter from "@components/eCommerce/HeaderCounter";
-import { getTotalWishlistQntSelector } from "@store/wishlist/act/getWishlist";
+import { getTotalWishlistQntSelector } from "@store/wishlist/act/actGetWishlist";
 import WishlistSVG from "@assets/svg/headerWishlist.svg?react";
 import CartSVG from "@assets/svg/cart.svg?react";
 import { getTotalCartQntSelector } from "@store/cart/cartSelectors";

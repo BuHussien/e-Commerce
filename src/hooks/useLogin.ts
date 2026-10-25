@@ -6,7 +6,7 @@ import type { TLoginForm } from "@customTypes/auth";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { actAuthLogin, resetUI } from "@store/auth/authSlice";
 import { useEffect } from "react";
-import actGetWishlists from "@store/wishlist/act/getWishlist";
+import actGetWishlists from "@store/wishlist/act/actGetWishlist";
 
 
 export const useLogin = () => {

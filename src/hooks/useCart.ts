@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
-import getProductsFullInfo from "@store/cart/getProductsFullInfo";
+import getProductsFullInfo from "@store/cart/act/actGetProductsFullInfo";
 import { cleanCartProductsFullInfo } from "@store/cart/cartSlice";
 const useCart = () => {
   const dispatch = useAppDispatch();

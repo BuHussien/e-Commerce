@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import actLikeToggle from "./act/likeToggle";
 import type { TLoading } from "@customTypes/shared";
-import actGetWishlists from "./act/getWishlist";
+import actGetWishlists from "./act/actGetWishlist";
 import { logout } from "@store/auth/authSlice";
 
 interface IWishlist {

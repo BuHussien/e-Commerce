@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@store/hooks";
-import actGetAllProducts from "@store/products/act/getAllProducts";
+import actGetAllProducts from "@store/products/act/actGetAllProducts";
 import { useEffect } from "react";
 
 const useWishlist = () => {

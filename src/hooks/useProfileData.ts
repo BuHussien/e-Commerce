@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import actGetOrders from "@store/orders/act/actGetOrders";
-import actGetWishlists from "@store/wishlist/act/getWishlist";
+import actGetWishlists from "@store/wishlist/act/actGetWishlist";
 import actGetAddress from "@store/addresses/act/actGetAddress";
 import type { ActiveModal } from "@customTypes/shared";
 

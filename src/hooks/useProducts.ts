@@ -3,10 +3,10 @@ import {
   actGetProductsByCategoryPrefix,
   cleanUpProductsRecords,
 } from "@store/products/productsSlice";
-import { actGetAllProducts } from "@store/products/act/getAllProducts";
+import { actGetAllProducts } from "@store/products/act/actGetAllProducts";
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import actGetWishlists from "@store/wishlist/act/getWishlist";
+import actGetWishlists from "@store/wishlist/act/actGetWishlist";
 
 const useProducts = () => {
   const [searchParams] = useSearchParams();

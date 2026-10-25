@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@store/hooks";
-import { actGetCategories } from "../store/categories/atc/getCategories";
+import { actGetCategories } from "../store/categories/atc/actGetCategories";
 import { useEffect } from "react";
 import { cleanUpCategoriesRecords } from "@store/categories/categoriesSlice";
 

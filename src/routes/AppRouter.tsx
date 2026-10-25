@@ -14,7 +14,7 @@ const Orders = lazy(() => import("@pages/Orders"));
 
 
 import { useAppDispatch } from "@store/hooks";
-import actGetWishlists from "@store/wishlist/act/getWishlist";
+import actGetWishlists from "@store/wishlist/act/actGetWishlist";
 // import actGetOrders from "@store/orders/act/actGetOrders";
 import { useEffect } from "react";
 import Contact from "@pages/contact";

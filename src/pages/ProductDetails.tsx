@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@store/hooks";
-import actGetSingleProduct from "@store/products/act/getSingleProduct";
+import actGetSingleProduct from "@store/products/act/actGetSingleProduct";
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import WishList from "@assets/svg/wishlist.svg?react";
