@@ -2,6 +2,7 @@ import type { TLoading } from "@customTypes/shared";
 import { createSlice } from "@reduxjs/toolkit";
 import actAuthRegister from "./act/actAuthRegister";
 import actAuthLogin from "./act/actAuthLogin";
+import actUpdateUser from "./act/actUpdateUser";
 
 interface IAuthState {
   loading: TLoading;
@@ -34,7 +35,7 @@ const authSlice = createSlice({
     logout: (state) => {
       state.accessToken = null;
       state.user = null;
-    }
+    },
   },
   extraReducers: (builder) => {
     // Register
@@ -65,6 +66,25 @@ const authSlice = createSlice({
         state.user = action.payload.data.user;
       })
       .addCase(actAuthLogin.rejected, (state, action) => {
+        state.loading = "failed";
+        if (action.payload && typeof action.payload === "string")
+          state.error = action.payload;
+      });
+    // Update User
+    builder
+      .addCase(actUpdateUser.pending, (state) => {
+        state.loading = "pending";
+        state.error = null;
+      })
+      .addCase(actUpdateUser.fulfilled, (state, action) => {
+        state.loading = "succeeded";
+        state.error = null;
+        if (state.user && action.payload?.firstname !== undefined)
+          state.user.firstname = action.payload.firstname;
+        if (state.user && action.payload?.lastname !== undefined)
+          state.user.lastname = action.payload.lastname;
+      })
+      .addCase(actUpdateUser.rejected, (state, action) => {
         state.loading = "failed";
         if (action.payload && typeof action.payload === "string")
           state.error = action.payload;
