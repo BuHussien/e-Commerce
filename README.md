@@ -4,8 +4,9 @@
 A modern and responsive e-commerce application built with React, TypeScript, Redux Toolkit, and Tailwind CSS.
 
 ## 🚀 Features
+
 - Authentication (Login & Register)
-- Product browsing
+- Product Browsing
 - Shopping Cart
 - Wishlist
 - Checkout & Orders
@@ -15,6 +16,7 @@ A modern and responsive e-commerce application built with React, TypeScript, Red
 - Responsive Design
 
 ## 🛠️ Tech Stack
+
 - React
 - TypeScript
 - Vite
