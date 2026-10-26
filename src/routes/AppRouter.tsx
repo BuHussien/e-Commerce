@@ -23,6 +23,8 @@ import ProtectedRoutes from "@components/auth/ProtectedRoutes";
 import ProductDetails from "@pages/ProductDetails";
 import Profile from "@pages/Profile";
 import ProfileLayout from "@layouts/ProfileLayout";
+import AdminLayout from "@layouts/AdminLayout";
+import AdminDashboard from "@pages/dashboard";
 
 const router = createBrowserRouter([
   {
@@ -50,7 +52,24 @@ const router = createBrowserRouter([
         ]
       }
     ],
-  }
+  },
+  // Admin dashboard
+  {
+    path: "/dashboard",
+    element: (
+      <ProtectedRoutes>
+        <AdminLayout />
+      </ProtectedRoutes>
+    ),
+    errorElement: <Error />,
+    children: [
+      { index: true, element: <AdminDashboard /> },
+      // { path: "products", element: <AdminProducts /> },
+      // { path: "categories", element: <AdminCategories /> },
+      // { path: "orders", element: <AdminOrders /> },
+      // { path: "users", element: <AdminUsers /> },
+    ],
+  },
 ]);
 
 export const AppRouter = () => {
