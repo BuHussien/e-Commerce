@@ -25,6 +25,10 @@ import Profile from "@pages/Profile";
 import ProfileLayout from "@layouts/ProfileLayout";
 import AdminLayout from "@layouts/AdminLayout";
 import AdminDashboard from "@pages/dashboard";
+import AdminProducts from "@pages/dashboard/AdminProducts";
+import AdminCategories from "@pages/dashboard/AdminCategories";
+import AdminOrders from "@pages/dashboard/AdminOrders";
+import AdminUsers from "@pages/dashboard/AdminUsers";
 
 const router = createBrowserRouter([
   {
@@ -64,10 +68,10 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     children: [
       { index: true, element: <AdminDashboard /> },
-      // { path: "products", element: <AdminProducts /> },
-      // { path: "categories", element: <AdminCategories /> },
-      // { path: "orders", element: <AdminOrders /> },
-      // { path: "users", element: <AdminUsers /> },
+      { path: "products", element: <AdminProducts /> },
+      { path: "categories", element: <AdminCategories /> },
+      { path: "orders", element: <AdminOrders /> },
+      { path: "users", element: <AdminUsers /> },
     ],
   },
 ]);
