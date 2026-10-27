@@ -1,19 +1,19 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
-import actGetAllProducts from "@store/products/act/actGetAllProducts";
 import actGetCategories from "@store/categories/atc/actGetCategories";
 import actGetAllOrders from "@store/orders/act/actGetAllOrders";
+import actGetAllProducts from "@store/products/act/actGetAllProducts";
 
 interface IProps {}
 
 const AdminDashboard = ({}: IProps) => {
   const dispatch = useAppDispatch();
-  const { records: products } = useAppSelector((state) => state.products);
+  const { totalItems } = useAppSelector((state) => state.products);
   const { records: categories } = useAppSelector((state) => state.categories);
   const { allOrders: orders } = useAppSelector((state) => state.orders);
 
   useEffect(() => {
-    dispatch(actGetAllProducts());
+    dispatch(actGetAllProducts({}));
     dispatch(actGetCategories());
     dispatch(actGetAllOrders());
   }, [dispatch]);
@@ -46,7 +46,7 @@ const AdminDashboard = ({}: IProps) => {
               Total Products
             </p>
             <p className="mt-2 text-2xl font-bold text-gray-900">
-              {products.length}
+              {totalItems}
             </p>
           </div>
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-pink-50 text-pink-600">
