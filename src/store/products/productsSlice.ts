@@ -13,6 +13,7 @@ interface IProductsState {
   record: TProduct | null;
   loading: TLoading;
   error?: string | null;
+  totalItems: number;
 }
 
 const initialState: IProductsState = {
@@ -20,6 +21,7 @@ const initialState: IProductsState = {
   record: null,
   loading: "idle",
   error: null,
+  totalItems: 0
 };
 
 const productsSlice = createSlice({
@@ -63,7 +65,8 @@ const productsSlice = createSlice({
       .addCase(actGetAllProducts.fulfilled, (state, action) => {
         state.loading = "succeeded";
         state.error = null;
-        state.records = action.payload;
+        state.records = action.payload.records;
+        state.totalItems = action.payload.totalItems;
       })
       .addCase(actGetAllProducts.rejected, (state, action) => {
         state.loading = "failed";
