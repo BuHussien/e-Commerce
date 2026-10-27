@@ -13,6 +13,7 @@ interface IAuthState {
     firstname: string;
     lastname: string;
     confirmPassword: string;
+    role: string;
     id: number;
   } | null;
 }

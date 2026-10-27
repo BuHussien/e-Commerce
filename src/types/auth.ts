@@ -16,6 +16,7 @@ export type TLoginResponse = {
     firstname: string;
     lastname: string;
     confirmPassword: string;
+    role: string;
     id: number;
   } | null;
 };

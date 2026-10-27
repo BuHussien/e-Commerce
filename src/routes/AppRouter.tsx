@@ -29,6 +29,7 @@ import AdminProducts from "@pages/dashboard/AdminProducts";
 import AdminCategories from "@pages/dashboard/AdminCategories";
 import AdminOrders from "@pages/dashboard/AdminOrders";
 import AdminUsers from "@pages/dashboard/AdminUsers";
+import AdminRoutes from "@components/auth/AdminRoutes";
 
 const router = createBrowserRouter([
   {
@@ -62,7 +63,9 @@ const router = createBrowserRouter([
     path: "/dashboard",
     element: (
       <ProtectedRoutes>
-        <AdminLayout />
+        <AdminRoutes>
+          <AdminLayout />
+        </AdminRoutes>
       </ProtectedRoutes>
     ),
     errorElement: <Error />,

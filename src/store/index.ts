@@ -7,6 +7,7 @@ import orders from "@store/orders/ordersSlice";
 import wishlist from "@store/wishlist/wishlistSlice";
 import auth from "@store/auth/authSlice";
 import address from "@store/addresses/addressesSlice";
+import users from "@store/users/usersSlice";
 import storageModule from "redux-persist/lib/storage";
 import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
 const storage = (storageModule as any).default ?? storageModule;
@@ -30,6 +31,7 @@ const cartPersistConfig = {
 
 const rootReducer = combineReducers({
   categories,
+  users,
   products,
   wishlist,
   address,

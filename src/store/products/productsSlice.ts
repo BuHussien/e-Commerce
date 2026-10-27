@@ -4,6 +4,9 @@ import type { TLoading } from "@customTypes/shared";
 import type { TProduct } from "@customTypes/product";
 import actGetAllProducts from "./act/actGetAllProducts";
 import actGetSingleProduct from "./act/actGetSingleProduct";
+import actUpdateProduct from "./act/actUpdateProduct";
+import actAddProduct from "./act/actAddProduct";
+import actDeleteProduct from "./act/actDeleteProduct";
 
 interface IProductsState {
   records: TProduct[];
@@ -80,6 +83,61 @@ const productsSlice = createSlice({
         state.record = action.payload;
       })
       .addCase(actGetSingleProduct.rejected, (state, action) => {
+        state.loading = "failed";
+        state.error =
+          typeof action.payload === "string"
+            ? action.payload
+            : action.error.message || "An unknown error occurred";
+      });
+      // Add Product
+    builder
+      .addCase(actAddProduct.pending, (state) => {
+        state.loading = "pending";
+        state.error = null;
+      })
+      .addCase(actAddProduct.fulfilled, (state, action) => {
+        state.loading = "succeeded";
+        state.records.push(action.payload);
+      })
+      .addCase(actAddProduct.rejected, (state, action) => {
+        state.loading = "failed";
+        state.error =
+          typeof action.payload === "string"
+            ? action.payload
+            : action.error.message || "An unknown error occurred";
+      });
+
+    // Update Product
+    builder
+      .addCase(actUpdateProduct.pending, (state) => {
+        state.loading = "pending";
+        state.error = null;
+      })
+      .addCase(actUpdateProduct.fulfilled, (state, action) => {
+        state.loading = "succeeded";
+        state.records = state.records.map((el) =>
+          el.id === action.payload.id ? action.payload : el
+        );
+      })
+      .addCase(actUpdateProduct.rejected, (state, action) => {
+        state.loading = "failed";
+        state.error =
+          typeof action.payload === "string"
+            ? action.payload
+            : action.error.message || "An unknown error occurred";
+      });
+
+    // Delete Product
+    builder
+      .addCase(actDeleteProduct.pending, (state) => {
+        state.loading = "pending";
+        state.error = null;
+      })
+      .addCase(actDeleteProduct.fulfilled, (state, action) => {
+        state.loading = "succeeded";
+        state.records = state.records.filter((el) => el.id !== action.payload);
+      })
+      .addCase(actDeleteProduct.rejected, (state, action) => {
         state.loading = "failed";
         state.error =
           typeof action.payload === "string"

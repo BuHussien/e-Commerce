@@ -1,17 +1,19 @@
-import type { TOrderItem } from "@customTypes/order";
+import type { TOrder, TOrderItem } from "@customTypes/order";
 import type { TLoading } from "@customTypes/shared";
 import { createSlice } from "@reduxjs/toolkit";
 import actPlaceOrder from "./act/actPlaceOrder";
 import actGetOrders from "./act/actGetOrders";
-
+import actGetAllOrders from "./act/actGetAllOrders";
 
 interface IOrderState {
   orderList: TOrderItem[];
+  allOrders?: TOrder[];
   loading: TLoading;
   error: string | null;
 }
 const initialState: IOrderState = {
   orderList: [],
+  allOrders: [],
   loading: "idle",
   error: null,
 };
@@ -24,6 +26,7 @@ const ordersSlice = createSlice({
       state.error = null;
       state.loading = "idle";
       state.orderList = [];
+      state.allOrders = [];
     },
   },
   extraReducers: (builder) => {
@@ -43,6 +46,7 @@ const ordersSlice = createSlice({
           state.error = action.payload;
         else state.error = action.error.message || "An unknown error occurred";
       });
+
     builder
       .addCase(actGetOrders.pending, (state) => {
         state.loading = "pending";
@@ -54,6 +58,24 @@ const ordersSlice = createSlice({
         state.orderList = action.payload;
       })
       .addCase(actGetOrders.rejected, (state, action) => {
+        state.loading = "failed";
+        if (action.payload && typeof action.payload === "string")
+          state.error = action.payload;
+        else state.error = action.error.message || "An unknown error occurred";
+      });
+    // For admin
+
+    builder
+      .addCase(actGetAllOrders.pending, (state) => {
+        state.loading = "pending";
+        state.error = null;
+      })
+      .addCase(actGetAllOrders.fulfilled, (state, action) => {
+        state.loading = "succeeded";
+        state.error = null;
+        state.allOrders = action.payload;
+      })
+      .addCase(actGetAllOrders.rejected, (state, action) => {
         state.loading = "failed";
         if (action.payload && typeof action.payload === "string")
           state.error = action.payload;

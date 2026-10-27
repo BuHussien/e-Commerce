@@ -4,7 +4,7 @@ import axiosInstance from "@services/axios-global";
 import AxiosErrorHandler from "@utilities/AxiosErrorHandler";
 
 export const actGetCategories = createAsyncThunk(
-  "Categories/getCategories",
+  "categories/getCategories",
   async (_, thunkApi) => {
     const { rejectWithValue,signal } = thunkApi;
     try {

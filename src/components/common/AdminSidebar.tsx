@@ -1,5 +1,9 @@
+import { logout } from "@store/auth/authSlice";
+import { clearWishlist } from "@store/wishlist/wishlistSlice";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useAppDispatch } from "@store/hooks";
+import { useNavigate } from "react-router-dom";
 
 const navItems = [
   { title: "Dashboard", to: "/dashboard" },
@@ -10,8 +14,16 @@ const navItems = [
 ];
 
 const AdminSidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
+  const [isOpen, setIsOpen] = useState(false);
+  const handleLogout = async () => {
+    await dispatch(logout());
+    await dispatch(clearWishlist());
+
+    navigate("/login", { replace: true });
+  };
   return (
     <>
       {/* Mobile Menu Button */}
@@ -82,6 +94,7 @@ const AdminSidebar = () => {
         <button
           type="button"
           className="mt-auto rounded-lg px-4 py-3 text-left text-sm font-medium text-red-500 hover:bg-red-50"
+          onClick={handleLogout}
         >
           Log Out
         </button>

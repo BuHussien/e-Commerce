@@ -8,7 +8,6 @@ import { actAuthLogin, resetUI } from "@store/auth/authSlice";
 import { useEffect } from "react";
 import actGetWishlists from "@store/wishlist/act/actGetWishlist";
 
-
 export const useLogin = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -18,15 +17,20 @@ export const useLogin = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<signInType>({ resolver: zodResolver(signInScheema) });
-
   const { accessToken, error, loading } = useAppSelector((state) => state.auth);
 
   const submitForm: SubmitHandler<signInType> = async (data: TLoginForm) => {
     if (searchParams.get("msg") === "account_created") setSearchParams("");
     try {
       await dispatch(actAuthLogin(data)).unwrap();
-      navigate("/");
-      dispatch(actGetWishlists());
+      const user = await dispatch(actAuthLogin(data)).unwrap();
+
+      if ( user.data.user?.role === "admin" || user.data.user?.role === "greatAdmin"){
+        navigate("/dashboard");
+      }else{
+        navigate("/");
+        dispatch(actGetWishlists());
+      }
     } catch (error) {
       console.log(error);
     }
@@ -37,5 +41,5 @@ export const useLogin = () => {
     };
   }, [dispatch]);
 
-  return {accessToken, handleSubmit, submitForm, error, loading, errors, register, searchParams};
+  return { accessToken, handleSubmit, submitForm, error, loading, errors, register, searchParams};
 };
