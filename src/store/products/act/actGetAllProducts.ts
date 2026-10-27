@@ -5,7 +5,7 @@ import AxiosErrorHandler from "@utilities/AxiosErrorHandler";
 
 export const actGetAllProducts = createAsyncThunk(
   "products/actGetAllProducts",
-  async ({ page = 1, limit = 5 }: { page?: number; limit?: number }, thunkApi) => {
+  async ({ page = 1, limit = 5 }: { page?: number; limit?: number } = {}, thunkApi) => {
     const { rejectWithValue, signal } = thunkApi;
     try {
       const response = await axiosInstance.get<TProduct[]>("/products", {

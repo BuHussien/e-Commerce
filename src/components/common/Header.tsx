@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { useAppSelector } from "@store/hooks";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "@styles/global.css";
@@ -11,7 +11,6 @@ import { getTotalCartQntSelector } from "@store/cart/cartSelectors";
 import ProfileMenu from "./ProfileMenu";
 
 const Header = () => {
-  const dispatch = useAppDispatch();
   const { user, accessToken } = useAppSelector((state) => state.auth);
 
   const wishlistQnt = useAppSelector(getTotalWishlistQntSelector);
@@ -48,6 +47,9 @@ const Header = () => {
             <nav className="hidden lg:flex space-x-8 mt-1 ml-6 border-l border-gray-200 pl-5">
               <NavLink to="/" className={navLinkClass}>
                 Home
+              </NavLink>
+              <NavLink to="products" className={navLinkClass}>
+                Products
               </NavLink>
               <NavLink to="categories" className={navLinkClass}>
                 Categories

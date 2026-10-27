@@ -1,36 +1,59 @@
 import Heading from "@components/common/Heading";
+import Paginator from "@components/common/Paginator";
 import Product from "@components/eCommerce/Product";
 import Loading from "@components/feedback/Loading";
 import LottieHandler from "@components/feedback/LottieHandler";
 import useProducts from "@hooks/useProducts";
 
-
 export const Products = () => {
-  const { catPrefix, error, loading, records, wishlistItemsIds, isUserAccess } =
-    useProducts();
+  const {
+    catPrefix,
+    error,
+    loading,
+    records,
+    wishlistItemsIds,
+    isUserAccess,
+    currentPage,
+    totalPages,
+    startIndex,
+    itemsPerPage,
+    totalItems,
+    setCurrentPage,
+  } = useProducts();
+
   return (
     <Loading status={loading} error={error ?? null} skeletonFor="products">
       {records.length > 0 ? (
         <main className="min-h-screen bg-gray-50/70">
-          <section className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+          <section className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8 space-y-8">
             <Heading
               headTitle="Explore our collection"
               Title={`${catPrefix ?? "All"} Products`}
               description="Discover products you'll love from our collection."
-              recordsLength={`${records.length} product`}
-            ></Heading>
+              recordsLength={`${totalItems || records.length} product`}
+            />
+
             <div className="zoom-90">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
                 {records.map((record) => (
                   <Product
                     key={record.id}
                     {...record}
-                    isUserAccess = {isUserAccess}
+                    isUserAccess={isUserAccess}
                     isLiked={wishlistItemsIds.includes(record.id)}
                   />
                 ))}
               </div>
             </div>
+
+            {totalPages > 1 && !catPrefix && <Paginator
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={(page) => setCurrentPage(page)}
+              startIndex={startIndex}
+              itemsPerPage={itemsPerPage}
+              totalItems={totalItems || records.length}
+            />}
           </section>
         </main>
       ) : (
