@@ -23,7 +23,7 @@ export const Home = () => {
 
   useEffect(() => {
     dispatch(actGetCategories());
-    dispatch(actGetAllProducts({ page: 1, limit: 8 }));
+    dispatch(actGetAllProducts({ page: 1, limit: 100 }));
   }, [dispatch]);
 
   // Pick 4 random categories stably per categories change
@@ -31,6 +31,12 @@ export const Home = () => {
     if (!categories.length) return [];
     return [...categories].sort(() => 0.5 - Math.random()).slice(0, 4);
   }, [categories]);
+
+  // Pick 4 random products stably per products change
+  const randomProducts = useMemo(() => {
+    if (!products.length) return [];
+    return [...products].sort(() => 0.5 - Math.random()).slice(0, 4);
+  }, [products]);
 
   return (
     <main className="min-h-screen bg-gray-50/50 pb-20 space-y-16 lg:space-y-24">
@@ -58,13 +64,13 @@ export const Home = () => {
               <div className="flex flex-wrap items-center gap-4 pt-2">
                 <Link
                   to="/products"
-                  className="rounded-2xl bg-white px-8 py-4 text-sm font-bold text-pink-600 shadow-lg hover:bg-gray-50 hover:shadow-pink-900/20 hover:scale-[1.02] active:scale-95 transition-all"
+                  className="no-underline! rounded-2xl bg-white! px-8 py-4 text-sm font-bold text-pink-600! shadow-lg hover:bg-gray-50! hover:shadow-pink-900/20! hover:scale-[1.02] active:scale-95 transition-all"
                 >
                   Shop Now
                 </Link>
                 <Link
                   to="/categories"
-                  className="rounded-2xl bg-white/10 border border-white/20 px-8 py-4 text-sm font-semibold text-white backdrop-blur-md hover:bg-white/20 transition-all"
+                  className="no-underline! rounded-2xl bg-white/10! border border-white/20! px-8 py-4 text-sm font-semibold text-white! backdrop-blur-md hover:bg-white/20! transition-all"
                 >
                   Explore Categories
                 </Link>
@@ -208,7 +214,7 @@ export const Home = () => {
           />
           <Link
             to="/categories"
-            className="group flex items-center gap-1 text-xs font-bold sm:text-sm text-pink-600 hover:text-pink-700 transition-colors"
+            className=" no-underline! group flex items-center gap-1 text-xs font-bold sm:text-sm text-pink-600! hover:text-pink-700! transition-colors"
           >
             View All
             <span className="group-hover:translate-x-1 transition-transform">
@@ -227,7 +233,7 @@ export const Home = () => {
               <Link
                 key={cat.id}
                 to={`/products?cat_prefix=${cat.prefix}`}
-                className="group relative flex flex-col items-center overflow-hidden rounded-2xl bg-white p-6 shadow-sm border border-gray-100 hover:shadow-lg hover:border-pink-200 transition-all text-center"
+                className="no-underline! group relative flex flex-col items-center overflow-hidden rounded-2xl bg-white! p-6 shadow-sm border border-gray-100! hover:shadow-lg hover:border-pink-200! transition-all text-center"
               >
                 <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-2xl bg-gray-50 p-2 group-hover:bg-pink-50 group-hover:scale-110 transition-all">
                   <img
@@ -239,7 +245,7 @@ export const Home = () => {
                     className="h-14 w-14 object-contain"
                   />
                 </div>
-                <h3 className="text-sm font-bold text-gray-900 group-hover:text-pink-600 transition-colors">
+                <h3 className="text-sm font-bold text-gray-800! group-hover:text-pink-600! transition-colors">
                   {cat.title}
                 </h3>
               </Link>
@@ -270,7 +276,7 @@ export const Home = () => {
             <div className="relative z-10 pt-4">
               <Link
                 to="/products"
-                className="inline-block rounded-xl bg-white px-6 py-3 text-xs font-bold text-gray-900 hover:bg-pink-600 hover:text-white transition-all shadow-md"
+                className="no-underline! inline-block rounded-xl bg-white! px-6 py-3 text-xs font-bold text-gray-900! hover:bg-pink-400! hover:text-white! transition-all! shadow-md"
               >
                 Explore Trending
               </Link>
@@ -296,7 +302,7 @@ export const Home = () => {
             <div className="relative z-10 pt-4">
               <Link
                 to="/products"
-                className="inline-block rounded-xl bg-white px-6 py-3 text-xs font-bold text-gray-900 hover:bg-purple-600 hover:text-white transition-all shadow-md"
+                className="no-underline! inline-block rounded-xl bg-white! px-6 py-3 text-xs font-bold text-gray-900! hover:bg-purple-600! hover:text-white! transition-all shadow-md"
               >
                 Shop Best Sellers
               </Link>
@@ -315,7 +321,7 @@ export const Home = () => {
           />
           <Link
             to="/products"
-            className="group flex items-center gap-1 text-xs font-bold sm:text-sm text-pink-600 hover:text-pink-700 transition-colors"
+            className="no-underline! group flex items-center gap-1 text-xs font-bold sm:text-sm text-pink-600! hover:text-pink-700! transition-colors"
           >
             Explore All
             <span className="group-hover:translate-x-1 transition-transform">
@@ -326,7 +332,7 @@ export const Home = () => {
 
         <Loading status={productsLoading} skeletonFor="products" error={null}>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {products.slice(0, 8).map((record) => (
+            {randomProducts.map((record) => (
               <Product
                 key={record.id}
                 {...record}
