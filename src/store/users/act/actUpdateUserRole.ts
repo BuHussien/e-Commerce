@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "@services/axios-global";
+import secureAxiosInstance from "@services/secure-axios";
 import AxiosErrorHandler from "@utilities/AxiosErrorHandler";
 import type { TUser } from "@customTypes/user";
 
@@ -18,7 +18,7 @@ const actUpdateUserRole = createAsyncThunk<
   "users/actUpdateUserRole",
   async ({ id, role }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.patch<TUser>(`/users/${id}`, {
+      const response = await secureAxiosInstance.patch<TUser>(`/users/${id}`, {
         role,
       });
 

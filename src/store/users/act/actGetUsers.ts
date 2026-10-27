@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "@services/axios-global";
+import secureAxiosInstance from "@services/secure-axios";
 import AxiosErrorHandler from "@utilities/AxiosErrorHandler";
 import type { TUser } from "@customTypes/user";
 
@@ -9,7 +9,7 @@ const actGetUsers = createAsyncThunk(
     const { rejectWithValue, signal } = thunkAPI;
 
     try {
-      const response = await axiosInstance.get<TUser[]>("/users", {
+      const response = await secureAxiosInstance.get<TUser[]>("/users", {
         signal,
       });
 

@@ -1,7 +1,7 @@
 
 import type { TCategory } from "@customTypes/category";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "@services/axios-global";
+import secureAxiosInstance from "@services/secure-axios";
 import AxiosErrorHandler from "@utilities/AxiosErrorHandler";
 
 export const actAddCategory = createAsyncThunk(
@@ -9,11 +9,8 @@ export const actAddCategory = createAsyncThunk(
   async (categoryData: Omit<TCategory, "id">, thunkApi) => {
     const { rejectWithValue, signal } = thunkApi;
     try {
-      const response = await axiosInstance.post<TCategory>(
-        "/categories",
-        categoryData,
-        { signal },
-      );
+      const response = await secureAxiosInstance.post<TCategory>("/categories",categoryData,{ signal });
+
       return response.data;
     } catch (error) {
       return rejectWithValue(AxiosErrorHandler(error));

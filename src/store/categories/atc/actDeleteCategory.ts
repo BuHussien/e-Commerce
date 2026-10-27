@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "@services/axios-global";
+import secureAxiosInstance from "@services/secure-axios";
 import AxiosErrorHandler from "@utilities/AxiosErrorHandler";
 
 export const actDeleteCategory = createAsyncThunk(
@@ -7,7 +7,7 @@ export const actDeleteCategory = createAsyncThunk(
   async (categoryId: number | string, thunkApi) => {
     const { rejectWithValue, signal } = thunkApi;
     try {
-      await axiosInstance.delete(`/categories/${categoryId}`, { signal });
+      await secureAxiosInstance.delete(`/categories/${categoryId}`, { signal });
       return categoryId;
     } catch (error) {
       return rejectWithValue(AxiosErrorHandler(error));

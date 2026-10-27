@@ -1,6 +1,6 @@
 import type { TCategory } from "@customTypes/category";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "@services/axios-global";
+import secureAxiosInstance from "@services/secure-axios";
 import AxiosErrorHandler from "@utilities/AxiosErrorHandler";
 
 export const actUpdateCategory = createAsyncThunk(
@@ -8,7 +8,7 @@ export const actUpdateCategory = createAsyncThunk(
   async (category: TCategory, thunkApi) => {
     const { rejectWithValue, signal } = thunkApi;
     try {
-      const response = await axiosInstance.put<TCategory>(
+      const response = await secureAxiosInstance.put<TCategory>(
         `/categories/${category.id}`,
         category,
         { signal },

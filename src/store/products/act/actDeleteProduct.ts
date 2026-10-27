@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "@services/axios-global";
+import secureAxiosInstance from "@services/secure-axios";
 import AxiosErrorHandler from "@utilities/AxiosErrorHandler";
 
 export const actDeleteProduct = createAsyncThunk(
@@ -7,7 +7,7 @@ export const actDeleteProduct = createAsyncThunk(
   async (productId: number | string, thunkApi) => {
     const { rejectWithValue, signal } = thunkApi;
     try {
-      await axiosInstance.delete(`/products/${productId}`, { signal });
+      await secureAxiosInstance.delete(`/products/${productId}`, { signal });
       return productId;
     } catch (error) {
       return rejectWithValue(AxiosErrorHandler(error));

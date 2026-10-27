@@ -1,6 +1,6 @@
 import type { TProduct } from "@customTypes/product";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "@services/axios-global";
+import secureAxiosInstance from "@services/secure-axios";
 import AxiosErrorHandler from "@utilities/AxiosErrorHandler";
 
 export const actUpdateProduct = createAsyncThunk(
@@ -8,7 +8,7 @@ export const actUpdateProduct = createAsyncThunk(
   async (product: TProduct, thunkApi) => {
     const { rejectWithValue, signal } = thunkApi;
     try {
-      const response = await axiosInstance.put<TProduct>(
+      const response = await secureAxiosInstance.put<TProduct>(
         `/products/${product.id}`,
         product,
         { signal },
