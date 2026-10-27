@@ -9,20 +9,10 @@ type InputProps<TFieldValue extends FieldValues> = {
   error?: string;
   placeholder: string;
   styles?: string;
-  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void; // onChange is better than this.(i think)
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   afterOnBlurOperationSuccessOrFailed?: React.ReactNode;
 };
-const Input = <TFieldValue extends FieldValues>({
-  type = "text",
-  register,
-  name,
-  error,
-  placeholder,
-  label,
-  styles,
-  onBlur,
-  afterOnBlurOperationSuccessOrFailed,
-}: InputProps<TFieldValue>) => {
+const Input = <TFieldValue extends FieldValues>({ type = "text", register, name, error, placeholder, label, styles, onBlur, afterOnBlurOperationSuccessOrFailed}: InputProps<TFieldValue>) => {
   const onBlurHandler = (e: React.FocusEvent<HTMLInputElement>) => {
     if (onBlur) onBlur(e);
     register(name).onBlur(e);
