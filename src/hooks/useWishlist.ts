@@ -5,7 +5,7 @@ import { useEffect } from "react";
 const useWishlist = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(actGetAllProducts());
+    dispatch(actGetAllProducts({}));
   }, [dispatch]);
 
   // this fetch all products which is performance issue ('FIX IT Later')

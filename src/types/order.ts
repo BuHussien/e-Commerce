@@ -1,5 +1,3 @@
-import type { TProduct } from "./product";
-
 export type TOrderItem = {
   id: number;
   title: string;

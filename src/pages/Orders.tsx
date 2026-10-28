@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
-import actGetOrders from "@store/orders/act/actGetOrders";
-import { type TOrderItem } from "@customTypes/order";
+
+import { type TOrder } from "@customTypes/order";
 import Heading from "@components/common/Heading";
+import actGetAllOrders from "@store/orders/act/actGetAllOrders";
 
 const Orders = () => {
   const dispatch = useAppDispatch();
-  const { error, loading, orderList } = useAppSelector((state) => state.orders);
-  const [selectedOrder, setSelectedOrder] = useState<TOrderItem | null>(null);
+  const { error, loading, allOrders } = useAppSelector((state) => state.orders);
+  const [selectedOrder, setSelectedOrder] = useState<TOrder | null>(null);
 
   useEffect(() => {
-    const promise = dispatch(actGetOrders());
+    const promise = dispatch(actGetAllOrders());
     return () => {
       promise.abort();
     };
@@ -36,7 +37,7 @@ const Orders = () => {
     );
   }
 
-  if (!orderList.length) {
+  if (!allOrders) {
     return (
       <div className="text-center py-16 px-4 bg-slate-50 rounded-2xl border border-dashed border-slate-300 max-w-lg mx-auto my-12">
         <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400">
@@ -72,7 +73,7 @@ const Orders = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 text-sm">
-              {orderList.map((order: TOrderItem) => (
+              {allOrders.map((order: TOrder) => (
                 <tr
                   key={order.id}
                   className="hover:bg-slate-50/80 transition-colors group"
@@ -158,16 +159,7 @@ const Orders = () => {
                         No image
                       </div>
                     )}
-                    <div>
-                      <h4 className="font-semibold text-slate-800 text-sm">
-                        {product.title}
-                      </h4>
-                      {product.cat_prefix && (
-                        <span className="inline-block text-[10px] font-medium uppercase tracking-wider text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded mt-1">
-                          {product.cat_prefix}
-                        </span>
-                      )}
-                    </div>
+                    
                   </div>
 
                   <span className="font-bold text-slate-900 text-sm">
