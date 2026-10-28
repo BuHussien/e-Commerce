@@ -1,14 +1,6 @@
 "use client";
-
 import { Button } from "@components/tailgrids/core/button";
-import {
-  Dialog,
-  DialogBody,
-  DialogClose,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@components/tailgrids/core/dialog";
+import { Dialog, DialogBody, DialogClose, DialogFooter, DialogHeader, DialogTitle } from "@components/tailgrids/core/dialog";
 import { Backdrop, OverlayWrapper } from "@components/tailgrids/core/overlay";
 import type { ReactNode } from "react";
 
@@ -20,13 +12,7 @@ interface IProps {
   onConfirm?: () => void;
 }
 
-const Modal = ({
-  title,
-  children,
-  cancelBtnTxt = "Cancel",
-  confirmBtnTxt = "Confirm",
-  onConfirm,
-}: IProps) => {
+const Modal = ({ title, children, cancelBtnTxt = "Cancel", confirmBtnTxt = "Confirm", onConfirm}: IProps) => {
   return (
     <OverlayWrapper>
       <Button className="rounded-xl bg-rose-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-rose-700 active:scale-[0.98]">

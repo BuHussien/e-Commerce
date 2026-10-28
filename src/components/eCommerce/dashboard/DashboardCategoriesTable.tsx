@@ -1,29 +1,58 @@
+import { useForm } from "react-hook-form";
+import Modal from "@components/common/Modal";
+import Input from "@components/forms/Input";
 import type { TCategory } from "@customTypes/category";
+import { useAppDispatch } from "@store/hooks";
+import actUpdateCategory from "@store/categories/atc/actUpdateCategory";
+import actDeleteCategory from "@store/categories/atc/actDeleteCategory";
 
 interface IProps {
   categories: TCategory[];
-  onEdit?: (categoty: TCategory) => void;
-  onDelete?: (categoty: TCategory) => void;
 }
 
-const DashboardCategoryTable = ({ categories, onEdit, onDelete }: IProps) => {
+type CategoryFormValues = {
+  title: string;
+  prefix: string;
+  img: string;
+};
+
+const DashboardCategoryTable = ({ categories }: IProps) => {
+  const dispatch = useAppDispatch();
+
+  // Form hooks for Edit
+  const {
+    register: registerEdit,
+    handleSubmit: handleSubmitEdit,
+    setValue: setEditValue,
+    formState: { errors: editErrors },
+  } = useForm<CategoryFormValues>();
+
+  // Open Edit and set default values
+  const handleOpenEdit = (category: TCategory) => {
+    setEditValue("title", category.title);
+    setEditValue("prefix", category.prefix);
+    setEditValue("img", category.img);
+  };
+
+  // Handle Edit Submit
+  const handleEditSubmit = (category: TCategory) => {
+    return handleSubmitEdit((data) => {
+      dispatch(
+        actUpdateCategory({
+          ...category,
+          ...data,
+        })
+      );
+    });
+  };
+
+  // Handle Delete Confirm
+  const handleConfirmDelete = (category: TCategory) => {
+    dispatch(actDeleteCategory(Number(category.id)));
+  };
+
   return (
     <section className="overflow-hidden rounded-2xl border border-gray-200/80 bg-white shadow-sm">
-      {/* Header */}
-      <div className="flex items-center justify-between gap-4 border-b border-gray-100 px-6 py-5">
-        <div>
-          <h2 className="text-lg font-bold text-gray-900">Recent Categories</h2>
-          <p className="mt-0.5 text-xs text-gray-500">
-            Manage your store categories
-          </p>
-        </div>
-
-        <span className="inline-flex items-center rounded-full bg-pink-50 px-3 py-1 text-xs font-semibold text-pink-600 ring-1 ring-inset ring-pink-500/10">
-          {categories.length}{" "}
-          {categories.length === 1 ? "Category" : "Categories"}
-        </span>
-      </div>
-
       {/* Table */}
       <div className="overflow-x-auto">
         <table className="w-full text-left text-sm">
@@ -37,10 +66,7 @@ const DashboardCategoryTable = ({ categories, onEdit, onDelete }: IProps) => {
           <tbody className="divide-y divide-gray-100">
             {categories.length > 0 ? (
               categories.map((categoty) => (
-                <tr
-                  key={categoty.id}
-                  className="transition-colors duration-150 hover:bg-gray-50/60"
-                >
+                <tr key={categoty.id} className="transition-colors duration-150 hover:bg-gray-50/60">
                   {/* Category Info */}
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3.5">
@@ -70,42 +96,37 @@ const DashboardCategoryTable = ({ categories, onEdit, onDelete }: IProps) => {
                   {/* Actions */}
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-center gap-2">
-                      {onEdit && (
-                        <button
-                          type="button"
-                          onClick={() => onEdit(categoty)}
-                          className="rounded-lg px-3 py-1.5 text-xs font-medium text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
-                        >
-                          Edit
-                        </button>
-                      )}
+                      {/* Edit Modal */}
+                      <span onClick={() => handleOpenEdit(categoty)}>
+                        <Modal title="Edit" confirmBtnTxt="Save Changes"onConfirm={handleEditSubmit(categoty)}>
+                          <div className="space-y-4">
+                            <Input  label="Category Title"  name="title"  placeholder="Enter category title"  register={registerEdit}  error={editErrors?.title?.message} />
+                            <Input label="Category Prefix" name="prefix" placeholder="Enter category prefix" register={registerEdit} error={editErrors?.prefix?.message} />
+                            <Input label="Image URL" name="img" type="url" placeholder="Enter image URL" register={registerEdit} error={editErrors?.img?.message} />
+                          </div>
+                        </Modal>
+                      </span>
 
-                      {onDelete && (
-                        <button
-                          type="button"
-                          onClick={() => onDelete(categoty)}
-                          className="rounded-lg px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors"
-                        >
-                          Delete
-                        </button>
-                      )}
+                      {/* Delete Modal */}
+                      <Modal title="Delete" confirmBtnTxt="Delete" onConfirm={() => handleConfirmDelete(categoty)}>
+                        <p className="text-xs text-gray-500 text-center py-2">
+                          Are you sure you want to delete{" "}
+                          <span className="font-semibold text-gray-800">
+                            "{categoty.title}"
+                          </span>
+                          ? This action cannot be undone.
+                        </p>
+                      </Modal>
                     </div>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td
-                  colSpan={4}
-                  className="px-6 py-12 text-center text-sm text-gray-500"
-                >
+                <td colSpan={2} className="px-6 py-12 text-center text-sm text-gray-500">
                   <div className="flex flex-col items-center justify-center gap-1">
-                    <span className="font-medium text-gray-700">
-                      No Categories found
-                    </span>
-                    <span className="text-xs text-gray-400">
-                      Try adding some Categories to display here.
-                    </span>
+                    <span className="font-medium text-gray-700">No Categories found</span>
+                    <span className="text-xs text-gray-400">Try adding some Categories to display here.</span>
                   </div>
                 </td>
               </tr>
