@@ -1,4 +1,4 @@
-import type { TOrder, TOrderItem } from "@customTypes/order";
+import type { TOrder } from "@customTypes/order";
 import type { TLoading } from "@customTypes/shared";
 import { createSlice } from "@reduxjs/toolkit";
 import actPlaceOrder from "./act/actPlaceOrder";
