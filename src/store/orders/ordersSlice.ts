@@ -6,7 +6,7 @@ import actGetOrders from "./act/actGetOrders";
 import actGetAllOrders from "./act/actGetAllOrders";
 
 interface IOrderState {
-  orderList: TOrderItem[];
+  orderList: TOrder[];
   allOrders?: TOrder[];
   loading: TLoading;
   error: string | null;

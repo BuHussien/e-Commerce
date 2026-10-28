@@ -1,14 +1,14 @@
-import type { TOrderItem } from "@customTypes/order";
+import type { TOrder } from "@customTypes/order";
 import { createAsyncThunk, createSelector } from "@reduxjs/toolkit";
 import axiosInstance from "@services/axios-global";
 import type { RootState } from "@store/index";
 import AxiosErrorHandler from "@utilities/AxiosErrorHandler";
 
-export const actGetOrders = createAsyncThunk<TOrderItem[],void,{ rejectValue: string }>("orders/actGetOrders", async (_, { rejectWithValue, getState }) => {
+export const actGetOrders = createAsyncThunk<TOrder[],void,{ rejectValue: string }>("orders/actGetOrders", async (_, { rejectWithValue, getState }) => {
   
     try {
     const { auth } = getState() as RootState;
-    const response = await axiosInstance.get<TOrderItem[]>(
+    const response = await axiosInstance.get<TOrder[]>(
       `/orders?userId=${auth.user?.id}`,
     );
     return response.data;
